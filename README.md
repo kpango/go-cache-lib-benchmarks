@@ -142,4 +142,154 @@ BenchmarkBitcaskSetBigDataNoTTL-16          	   11043	    252338 ns/op	  787591 
 BenchmarkBitcaskSetBigDataNoTTL-16          	    7423	    222093 ns/op	  788157 B/op	    1579 allocs/op
 PASS
 ok  	github.com/kpango/go-cache-lib-benchmarks	312.358s
+go clean ./...
+go clean -modcache
+rm -rf ./*.log
+rm -rf ./*.svg
+rm -rf ./go.*
+rm -rf pprof
+rm -rf bench
+rm -rf vendor
+GO111MODULE=on go mod init
+GO111MODULE=on go mod tidy
+sleep 3
+go test -count=3 -run=NONE -bench . -benchmem
+goos: linux
+goarch: amd64
+pkg: github.com/kpango/go-cache-lib-benchmarks
+cpu: Intel(R) Core(TM) i9-9880H CPU @ 2.30GHz
+BenchmarkDefaultMapSetSmallDataNoTTL-16     	 2643079	      1285 ns/op	       6 B/op	       0 allocs/op
+BenchmarkDefaultMapSetSmallDataNoTTL-16     	 2657940	      1114 ns/op	       5 B/op	       0 allocs/op
+BenchmarkDefaultMapSetSmallDataNoTTL-16     	 2550610	       907.0 ns/op	       5 B/op	       0 allocs/op
+BenchmarkDefaultMapSetBigDataNoTTL-16       	     846	   2015840 ns/op	   15223 B/op	     379 allocs/op
+BenchmarkDefaultMapSetBigDataNoTTL-16       	     676	   1743838 ns/op	   19027 B/op	     474 allocs/op
+BenchmarkDefaultMapSetBigDataNoTTL-16       	     640	   1725203 ns/op	   20111 B/op	     501 allocs/op
+BenchmarkSyncMapSetSmallDataNoTTL-16        	 5187840	       236.3 ns/op	     194 B/op	      12 allocs/op
+BenchmarkSyncMapSetSmallDataNoTTL-16        	 3360160	       300.4 ns/op	     198 B/op	      12 allocs/op
+BenchmarkSyncMapSetSmallDataNoTTL-16        	 5226325	       338.4 ns/op	     194 B/op	      12 allocs/op
+BenchmarkSyncMapSetBigDataNoTTL-16          	    1441	    771124 ns/op	  107483 B/op	    6370 allocs/op
+BenchmarkSyncMapSetBigDataNoTTL-16          	    1374	    800952 ns/op	  107923 B/op	    6381 allocs/op
+BenchmarkSyncMapSetBigDataNoTTL-16          	    1474	    796597 ns/op	  107280 B/op	    6365 allocs/op
+BenchmarkGacheSetSmallDataNoTTL-16          	 4943024	       227.3 ns/op	      98 B/op	       4 allocs/op
+BenchmarkGacheSetSmallDataNoTTL-16          	 4099231	       246.8 ns/op	      99 B/op	       4 allocs/op
+BenchmarkGacheSetSmallDataNoTTL-16          	 5309982	       213.8 ns/op	      98 B/op	       4 allocs/op
+BenchmarkGacheSetSmallDataWithTTL-16        	 6140960	       190.9 ns/op	      98 B/op	       4 allocs/op
+BenchmarkGacheSetSmallDataWithTTL-16        	 6007318	       198.2 ns/op	      98 B/op	       4 allocs/op
+BenchmarkGacheSetSmallDataWithTTL-16        	 6009673	       209.8 ns/op	      98 B/op	       4 allocs/op
+BenchmarkGacheSetBigDataNoTTL-16            	    7651	    156950 ns/op	   50929 B/op	    2091 allocs/op
+BenchmarkGacheSetBigDataNoTTL-16            	    7473	    161629 ns/op	   50948 B/op	    2091 allocs/op
+BenchmarkGacheSetBigDataNoTTL-16            	    7255	    159363 ns/op	   50997 B/op	    2093 allocs/op
+BenchmarkGacheSetBigDataWithTTL-16          	    7449	    150347 ns/op	   50905 B/op	    2091 allocs/op
+BenchmarkGacheSetBigDataWithTTL-16          	    6404	    176525 ns/op	   51243 B/op	    2099 allocs/op
+BenchmarkGacheSetBigDataWithTTL-16          	    7219	    155465 ns/op	   51027 B/op	    2093 allocs/op
+BenchmarkTTLCacheSetSmallDataNoTTL-16       	  769513	      2008 ns/op	     210 B/op	       4 allocs/op
+BenchmarkTTLCacheSetSmallDataNoTTL-16       	  745357	      2155 ns/op	     210 B/op	       4 allocs/op
+BenchmarkTTLCacheSetSmallDataNoTTL-16       	  779490	      1924 ns/op	     209 B/op	       4 allocs/op
+BenchmarkTTLCacheSetSmallDataWithTTL-16     	  219840	      6125 ns/op	     255 B/op	       5 allocs/op
+BenchmarkTTLCacheSetSmallDataWithTTL-16     	  209316	      5533 ns/op	     258 B/op	       5 allocs/op
+BenchmarkTTLCacheSetSmallDataWithTTL-16     	  216009	      5414 ns/op	     256 B/op	       5 allocs/op
+BenchmarkTTLCacheSetBigDataNoTTL-16         	     723	   2226131 ns/op	  116978 B/op	    2498 allocs/op
+BenchmarkTTLCacheSetBigDataNoTTL-16         	     579	   2095111 ns/op	  121593 B/op	    2610 allocs/op
+BenchmarkTTLCacheSetBigDataNoTTL-16         	     595	   2115237 ns/op	  120978 B/op	    2595 allocs/op
+BenchmarkTTLCacheSetBigDataWithTTL-16       	     466	   4296047 ns/op	  127253 B/op	    2747 allocs/op
+BenchmarkTTLCacheSetBigDataWithTTL-16       	     444	   3744060 ns/op	  128648 B/op	    2781 allocs/op
+BenchmarkTTLCacheSetBigDataWithTTL-16       	     403	   3708909 ns/op	  131710 B/op	    2855 allocs/op
+BenchmarkGoCacheSetSmallDataNoTTL-16        	 1638081	      1422 ns/op	      72 B/op	       4 allocs/op
+BenchmarkGoCacheSetSmallDataNoTTL-16        	 1708333	      1476 ns/op	      72 B/op	       4 allocs/op
+BenchmarkGoCacheSetSmallDataNoTTL-16        	 1866837	      1661 ns/op	      71 B/op	       4 allocs/op
+BenchmarkGoCacheSetSmallDataWithTTL-16      	 1108484	      3057 ns/op	      76 B/op	       4 allocs/op
+BenchmarkGoCacheSetSmallDataWithTTL-16      	 1184559	      2593 ns/op	      75 B/op	       4 allocs/op
+BenchmarkGoCacheSetSmallDataWithTTL-16      	  971601	      2505 ns/op	      78 B/op	       4 allocs/op
+BenchmarkGoCacheSetBigDataNoTTL-16          	     541	   2117240 ns/op	   57284 B/op	    2641 allocs/op
+BenchmarkGoCacheSetBigDataNoTTL-16          	     549	   2410998 ns/op	   56913 B/op	    2632 allocs/op
+BenchmarkGoCacheSetBigDataNoTTL-16          	     604	   2167320 ns/op	   54711 B/op	    2579 allocs/op
+BenchmarkGoCacheSetBigDataWithTTL-16        	     534	   2204202 ns/op	   57605 B/op	    2649 allocs/op
+BenchmarkGoCacheSetBigDataWithTTL-16        	     489	   2212552 ns/op	   59884 B/op	    2704 allocs/op
+BenchmarkGoCacheSetBigDataWithTTL-16        	     544	   2198998 ns/op	   57141 B/op	    2638 allocs/op
+BenchmarkBigCacheSetSmallDataNoTTL-16       	  495056	      2231 ns/op	     259 B/op	       8 allocs/op
+BenchmarkBigCacheSetSmallDataNoTTL-16       	  531310	      2455 ns/op	     244 B/op	       8 allocs/op
+BenchmarkBigCacheSetSmallDataNoTTL-16       	  497934	      2230 ns/op	     333 B/op	       8 allocs/op
+BenchmarkBigCacheSetSmallDataWithTTL-16     	  550522	      2192 ns/op	     340 B/op	       8 allocs/op
+BenchmarkBigCacheSetSmallDataWithTTL-16     	  533551	      2278 ns/op	     349 B/op	       8 allocs/op
+BenchmarkBigCacheSetSmallDataWithTTL-16     	  525224	      2262 ns/op	     247 B/op	       8 allocs/op
+BenchmarkBigCacheSetBigDataNoTTL-16         	     160	   7337015 ns/op	27279060 B/op	    8165 allocs/op
+BenchmarkBigCacheSetBigDataNoTTL-16         	     339	   6420407 ns/op	24246362 B/op	    7102 allocs/op
+BenchmarkBigCacheSetBigDataNoTTL-16         	     358	   6458930 ns/op	24741548 B/op	    7018 allocs/op
+BenchmarkBigCacheSetBigDataWithTTL-16       	     362	   6725875 ns/op	24106051 B/op	    6998 allocs/op
+BenchmarkBigCacheSetBigDataWithTTL-16       	     350	   6706111 ns/op	25348638 B/op	    7069 allocs/op
+BenchmarkBigCacheSetBigDataWithTTL-16       	     385	   6617622 ns/op	25009681 B/op	    6988 allocs/op
+BenchmarkFastCacheSetSmallDataNoTTL-16      	  635128	      1582 ns/op	      62 B/op	       4 allocs/op
+BenchmarkFastCacheSetSmallDataNoTTL-16      	  833314	      1634 ns/op	      56 B/op	       4 allocs/op
+BenchmarkFastCacheSetSmallDataNoTTL-16      	  714148	      1538 ns/op	      59 B/op	       4 allocs/op
+BenchmarkFastCacheSetBigDataNoTTL-16        	     379	   2857419 ns/op	12640979 B/op	    8477 allocs/op
+BenchmarkFastCacheSetBigDataNoTTL-16        	     446	   2342194 ns/op	12634699 B/op	    8277 allocs/op
+BenchmarkFastCacheSetBigDataNoTTL-16        	     478	   2674766 ns/op	12635025 B/op	    8372 allocs/op
+BenchmarkFreeCacheSetSmallDataNoTTL-16      	  822547	      1390 ns/op	     140 B/op	       8 allocs/op
+BenchmarkFreeCacheSetSmallDataNoTTL-16      	  809064	      1401 ns/op	     140 B/op	       8 allocs/op
+BenchmarkFreeCacheSetSmallDataNoTTL-16      	  827200	      1386 ns/op	     139 B/op	       8 allocs/op
+BenchmarkFreeCacheSetSmallDataWithTTL-16    	  830641	      1360 ns/op	     141 B/op	       8 allocs/op
+BenchmarkFreeCacheSetSmallDataWithTTL-16    	  824226	      1409 ns/op	     139 B/op	       8 allocs/op
+BenchmarkFreeCacheSetSmallDataWithTTL-16    	  823095	      1418 ns/op	     139 B/op	       8 allocs/op
+BenchmarkFreeCacheSetBigDataNoTTL-16        	     399	   4260697 ns/op	16859147 B/op	   11044 allocs/op
+BenchmarkFreeCacheSetBigDataNoTTL-16        	     385	   3957501 ns/op	16860350 B/op	   11073 allocs/op
+BenchmarkFreeCacheSetBigDataNoTTL-16        	     368	   3881589 ns/op	16861921 B/op	   11112 allocs/op
+BenchmarkFreeCacheSetBigDataWithTTL-16      	     364	   3527338 ns/op	16160911 B/op	   10449 allocs/op
+BenchmarkFreeCacheSetBigDataWithTTL-16      	     415	   4047884 ns/op	16755916 B/op	   10919 allocs/op
+BenchmarkFreeCacheSetBigDataWithTTL-16      	     368	   3837183 ns/op	16809060 B/op	   11065 allocs/op
+BenchmarkGCacheLRUSetSmallDataNoTTL-16      	  264030	      6241 ns/op	     752 B/op	      24 allocs/op
+BenchmarkGCacheLRUSetSmallDataNoTTL-16      	  253401	      7416 ns/op	     756 B/op	      24 allocs/op
+BenchmarkGCacheLRUSetSmallDataNoTTL-16      	  239924	      5776 ns/op	     763 B/op	      24 allocs/op
+BenchmarkGCacheLRUSetSmallDataWithTTL-16    	  550334	      2772 ns/op	     313 B/op	      16 allocs/op
+BenchmarkGCacheLRUSetSmallDataWithTTL-16    	  291813	      3750 ns/op	     335 B/op	      17 allocs/op
+BenchmarkGCacheLRUSetSmallDataWithTTL-16    	  491138	      3066 ns/op	     316 B/op	      16 allocs/op
+BenchmarkGCacheLRUSetBigDataNoTTL-16        	     422	   4613691 ns/op	  417486 B/op	   13073 allocs/op
+BenchmarkGCacheLRUSetBigDataNoTTL-16        	     417	   3928745 ns/op	  417473 B/op	   13080 allocs/op
+BenchmarkGCacheLRUSetBigDataNoTTL-16        	     451	   4140610 ns/op	  416242 B/op	   13025 allocs/op
+BenchmarkGCacheLRUSetBigDataWithTTL-16      	     416	   3963186 ns/op	  417799 B/op	   13082 allocs/op
+BenchmarkGCacheLRUSetBigDataWithTTL-16      	     423	   3312618 ns/op	  416987 B/op	   13069 allocs/op
+BenchmarkGCacheLRUSetBigDataWithTTL-16      	     421	   4188191 ns/op	  419304 B/op	   13080 allocs/op
+BenchmarkGCacheLFUSetSmallDataNoTTL-16      	  245124	      5284 ns/op	     582 B/op	      21 allocs/op
+BenchmarkGCacheLFUSetSmallDataNoTTL-16      	  293169	      5699 ns/op	     573 B/op	      20 allocs/op
+BenchmarkGCacheLFUSetSmallDataNoTTL-16      	  242949	      5484 ns/op	     582 B/op	      21 allocs/op
+BenchmarkGCacheLFUSetSmallDataWithTTL-16    	  513308	      3304 ns/op	     315 B/op	      16 allocs/op
+BenchmarkGCacheLFUSetSmallDataWithTTL-16    	  490880	      2830 ns/op	     316 B/op	      16 allocs/op
+BenchmarkGCacheLFUSetSmallDataWithTTL-16    	  274797	      4260 ns/op	     339 B/op	      17 allocs/op
+BenchmarkGCacheLFUSetBigDataNoTTL-16        	     370	   3798405 ns/op	  323144 B/op	   11151 allocs/op
+BenchmarkGCacheLFUSetBigDataNoTTL-16        	     380	   5331309 ns/op	  322630 B/op	   11130 allocs/op
+BenchmarkGCacheLFUSetBigDataNoTTL-16        	     380	   4241376 ns/op	  322416 B/op	   11129 allocs/op
+BenchmarkGCacheLFUSetBigDataWithTTL-16      	     400	   4825822 ns/op	  314999 B/op	   11059 allocs/op
+BenchmarkGCacheLFUSetBigDataWithTTL-16      	     405	   4265683 ns/op	  314665 B/op	   11049 allocs/op
+BenchmarkGCacheLFUSetBigDataWithTTL-16      	     387	   3207447 ns/op	  314595 B/op	   11076 allocs/op
+BenchmarkGCacheARCSetSmallDataNoTTL-16      	  220232	      5641 ns/op	     958 B/op	      28 allocs/op
+BenchmarkGCacheARCSetSmallDataNoTTL-16      	  210572	      8173 ns/op	     953 B/op	      28 allocs/op
+BenchmarkGCacheARCSetSmallDataNoTTL-16      	  204333	      7552 ns/op	     958 B/op	      28 allocs/op
+BenchmarkGCacheARCSetSmallDataWithTTL-16    	  245208	      4448 ns/op	     344 B/op	      17 allocs/op
+BenchmarkGCacheARCSetSmallDataWithTTL-16    	  248721	      4467 ns/op	     344 B/op	      17 allocs/op
+BenchmarkGCacheARCSetSmallDataWithTTL-16    	  231891	      5040 ns/op	     348 B/op	      17 allocs/op
+BenchmarkGCacheARCSetBigDataNoTTL-16        	     204	   4958948 ns/op	  508843 B/op	   14879 allocs/op
+BenchmarkGCacheARCSetBigDataNoTTL-16        	     252	   7074482 ns/op	  504757 B/op	   14717 allocs/op
+BenchmarkGCacheARCSetBigDataNoTTL-16        	     220	   6063293 ns/op	  512894 B/op	   14920 allocs/op
+BenchmarkGCacheARCSetBigDataWithTTL-16      	     243	   6324228 ns/op	  494903 B/op	   14743 allocs/op
+BenchmarkGCacheARCSetBigDataWithTTL-16      	     228	   6782321 ns/op	  489347 B/op	   14584 allocs/op
+BenchmarkGCacheARCSetBigDataWithTTL-16      	     253	   6377563 ns/op	  486799 B/op	   14475 allocs/op
+BenchmarkMCacheSetSmallDataNoTTL-16         	  151471	      8412 ns/op	    2424 B/op	      34 allocs/op
+BenchmarkMCacheSetSmallDataNoTTL-16         	  168376	      8946 ns/op	    2341 B/op	      33 allocs/op
+BenchmarkMCacheSetSmallDataNoTTL-16         	  163966	      8748 ns/op	    2389 B/op	      34 allocs/op
+BenchmarkMCacheSetSmallDataWithTTL-16       	  129789	      9139 ns/op	    2177 B/op	      35 allocs/op
+BenchmarkMCacheSetSmallDataWithTTL-16       	  128959	      9070 ns/op	    2165 B/op	      35 allocs/op
+BenchmarkMCacheSetSmallDataWithTTL-16       	  131551	      8933 ns/op	    2162 B/op	      35 allocs/op
+BenchmarkMCacheSetBigDataNoTTL-16           	     344	   4396703 ns/op	 1199301 B/op	   17317 allocs/op
+BenchmarkMCacheSetBigDataNoTTL-16           	     338	   3144073 ns/op	 1054836 B/op	   17334 allocs/op
+BenchmarkMCacheSetBigDataNoTTL-16           	     339	   4248077 ns/op	 1054742 B/op	   17331 allocs/op
+BenchmarkMCacheSetBigDataWithTTL-16         	     306	   5091143 ns/op	 1098553 B/op	   17844 allocs/op
+BenchmarkMCacheSetBigDataWithTTL-16         	     327	   5154701 ns/op	 1161857 B/op	   17757 allocs/op
+BenchmarkMCacheSetBigDataWithTTL-16         	     334	   3780142 ns/op	 1091573 B/op	   17723 allocs/op
+BenchmarkBitcaskSetSmallDataNoTTL-16        	   62145	     22113 ns/op	     666 B/op	      29 allocs/op
+BenchmarkBitcaskSetSmallDataNoTTL-16        	   56181	     31656 ns/op	     693 B/op	      29 allocs/op
+BenchmarkBitcaskSetSmallDataNoTTL-16        	   41202	     28505 ns/op	     783 B/op	      32 allocs/op
+BenchmarkBitcaskSetBigDataNoTTL-16          	     547	   1943178 ns/op	12606326 B/op	    6729 allocs/op
+BenchmarkBitcaskSetBigDataNoTTL-16          	     609	   2189628 ns/op	12603941 B/op	    6669 allocs/op
+BenchmarkBitcaskSetBigDataNoTTL-16          	     684	   2330591 ns/op	12601636 B/op	    6612 allocs/op
+PASS
+ok  	github.com/kpango/go-cache-lib-benchmarks	300.021s
 ```

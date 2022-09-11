@@ -51,7 +51,7 @@ var (
 	parallelism = 10000
 
 	bigData    = map[string]string{}
-	bigDataLen = 2 << 8
+	bigDataLen = 2 << 10
 
 	smallData = map[string]string{
 		"string": "aaaa",
