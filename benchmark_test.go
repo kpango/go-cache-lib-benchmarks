@@ -11,7 +11,8 @@ import (
 	"github.com/VictoriaMetrics/fastcache"
 	"github.com/bluele/gcache"
 	"github.com/coocood/freecache"
-	"github.com/kpango/gache/v2"
+	gachev2 "github.com/kpango/gache/v2"
+	"github.com/kpango/gache"
 	bigcache "github.com/allegro/bigcache/v3"
 	gocache "github.com/patrickmn/go-cache"
 	mcache "github.com/OrlovEvgeny/go-mcache"
@@ -139,26 +140,50 @@ func BenchmarkSyncMapSetBigDataNoTTL(b *testing.B) {
 		func(k, v string, t time.Duration) { m.Store(k, v) },
 		func(k string) { m.Load(k) })
 }
+func BenchmarkGacheV2SetSmallDataNoTTL(b *testing.B) {
+	g := gachev2.New[string]().SetDefaultExpire(NoTTL)
+	benchmark(b, smallData, NoTTL,
+		func(k, v string, t time.Duration) { g.Set(k, v) },
+		func(k string) { g.Get(k) })
+}
+func BenchmarkGacheV2SetSmallDataWithTTL(b *testing.B) {
+	g := gachev2.New[string]().SetDefaultExpire(ttl)
+	benchmark(b, smallData, ttl,
+		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
+		func(k string) { g.Get(k) })
+}
+func BenchmarkGacheV2SetBigDataNoTTL(b *testing.B) {
+	g := gachev2.New[string]().SetDefaultExpire(NoTTL)
+	benchmark(b, bigData, NoTTL,
+		func(k, v string, t time.Duration) { g.Set(k, v) },
+		func(k string) { g.Get(k) })
+}
+func BenchmarkGacheV2SetBigDataWithTTL(b *testing.B) {
+	g := gachev2.New[string]().SetDefaultExpire(ttl)
+	benchmark(b, bigData, ttl,
+		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
+		func(k string) { g.Get(k) })
+}
 func BenchmarkGacheSetSmallDataNoTTL(b *testing.B) {
-	g := gache.New[string]().SetDefaultExpire(NoTTL)
+	g := gache.New().SetDefaultExpire(NoTTL)
 	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 func BenchmarkGacheSetSmallDataWithTTL(b *testing.B) {
-	g := gache.New[string]().SetDefaultExpire(ttl)
+	g := gache.New().SetDefaultExpire(ttl)
 	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
 		func(k string) { g.Get(k) })
 }
 func BenchmarkGacheSetBigDataNoTTL(b *testing.B) {
-	g := gache.New[string]().SetDefaultExpire(NoTTL)
+	g := gache.New().SetDefaultExpire(NoTTL)
 	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 func BenchmarkGacheSetBigDataWithTTL(b *testing.B) {
-	g := gache.New[string]().SetDefaultExpire(ttl)
+	g := gache.New().SetDefaultExpire(ttl)
 	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
 		func(k string) { g.Get(k) })

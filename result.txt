@@ -1,8 +1,14 @@
-# go-cache-lib-benchmarks
-Go's cache libraries benchmarking
-
-## Benchmark Results
-```
+go clean ./...
+go clean -modcache
+rm -rf ./*.log
+rm -rf ./*.svg
+rm -rf ./go.*
+rm -rf pprof
+rm -rf bench
+rm -rf vendor
+GO111MODULE=on go mod init
+GO111MODULE=on go mod tidy
+sleep 3
 go test -count=3 -run=NONE -bench . -benchmem
 goos: linux
 goarch: amd64
@@ -153,4 +159,4 @@ BenchmarkBitcaskSetBigDataNoTTL-16          	     517	   2379943 ns/op	12607679 
 BenchmarkBitcaskSetBigDataNoTTL-16          	     553	   2336656 ns/op	12606064 B/op	    6722 allocs/op
 BenchmarkBitcaskSetBigDataNoTTL-16          	     523	   2182041 ns/op	12607398 B/op	    6756 allocs/op
 PASS
-ok  	github.com/kpango/go-cache-lib-benchmarks	321.109s```
+ok  	github.com/kpango/go-cache-lib-benchmarks	321.109s
