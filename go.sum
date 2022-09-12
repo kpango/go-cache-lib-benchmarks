@@ -229,8 +229,8 @@ github.com/klauspost/cpuid/v2 v2.0.9/go.mod h1:FInQzS24/EEf25PyTYn52gqo7WaD8xa02
 github.com/konsorten/go-windows-terminal-sequences v1.0.1/go.mod h1:T0+1ngSBFLxvqU3pZ+m/2kptfBszLMUkC4ZK/EgS/cQ=
 github.com/kpango/fastime v1.1.4 h1:pus9JgJBg/8Jie3ozayA4yNIV67BUPhbq0wMZY3CtYo=
 github.com/kpango/fastime v1.1.4/go.mod h1:tTNDbIo5qL6D7g5vh2YbkyUbOVP2kD/we3rSjN22PMY=
-github.com/kpango/gache/v2 v2.0.1 h1:DEHX3pfp2bnWLbv6pSsuyn8lHnCPTGiXSZpQwmnVsVI=
-github.com/kpango/gache/v2 v2.0.1/go.mod h1:jHqgjtqLx0OmM0ya0B4QpNjmeEMsINuO8IK91SsQdD0=
+github.com/kpango/gache/v2 v2.0.3 h1:ScKRSd4XqXxdqF1mcoEy/OhhlEUvi3Ym2sKGQ8fAw9k=
+github.com/kpango/gache/v2 v2.0.3/go.mod h1:jHqgjtqLx0OmM0ya0B4QpNjmeEMsINuO8IK91SsQdD0=
 github.com/kr/fs v0.1.0/go.mod h1:FFnZGqtBN9Gxj7eW1uZ42v5BccTP0vu6NEaFoC2HwRg=
 github.com/kr/logfmt v0.0.0-20140226030751-b84e30acd515/go.mod h1:+0opPa2QZZtGFBFZlji/RkVcI2GknAs/DXo4wKdlNEc=
 github.com/kr/pretty v0.1.0 h1:L/CwN0zerZDmRFUapSPitk6f+Q3+0za1rQkzVuMiMFI=
