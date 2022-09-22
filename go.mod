@@ -5,7 +5,7 @@ go 1.19
 require (
 	git.mills.io/prologic/bitcask v1.0.2
 	github.com/OrlovEvgeny/go-mcache v0.0.0-20200121124330-1a8195b34f3a
-	github.com/VictoriaMetrics/fastcache v1.10.0
+	github.com/VictoriaMetrics/fastcache v1.12.0
 	github.com/allegro/bigcache/v3 v3.0.2
 	github.com/bluele/gcache v0.0.2
 	github.com/coocood/freecache v1.2.2
