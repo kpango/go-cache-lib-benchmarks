@@ -7,10 +7,10 @@ import (
 	"time"
 	"unsafe"
 
-	"git.mills.io/prologic/bitcask"
-	"github.com/VictoriaMetrics/fastcache"
+	// "git.mills.io/prologic/bitcask"
+	// "github.com/VictoriaMetrics/fastcache"
 	"github.com/bluele/gcache"
-	"github.com/coocood/freecache"
+	// "github.com/coocood/freecache"
 	gachev2 "github.com/kpango/gache/v2"
 	"github.com/kpango/gache"
 	bigcache "github.com/allegro/bigcache/v3"
@@ -273,48 +273,48 @@ func BenchmarkBigCacheSetBigDataWithTTL(b *testing.B) {
 		func(k string) { bc.Get(k) })
 }
 
-func BenchmarkFastCacheSetSmallDataNoTTL(b *testing.B) {
-	fc := fastcache.New(20)
-	benchmark(b, smallData, NoTTL,
-		func(k, v string, t time.Duration) { fc.Set([]byte(k), []byte(v)) },
-		func(k string) {
-			var val []byte
-			val = fc.Get(val, []byte(k))
-		})
-}
-func BenchmarkFastCacheSetBigDataNoTTL(b *testing.B) {
-	fc := fastcache.New(20)
-	benchmark(b, bigData, NoTTL,
-		func(k, v string, t time.Duration) { fc.SetBig([]byte(k), []byte(v)) },
-		func(k string) {
-			var val []byte
-			val = fc.Get(val, []byte(k))
-		})
-}
-func BenchmarkFreeCacheSetSmallDataNoTTL(b *testing.B) {
-	c := freecache.NewCache(100 * 1024 * 1024)
-	benchmark(b, smallData, NoTTL,
-		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), -1) },
-		func(k string) { c.Get([]byte(k)) })
-}
-func BenchmarkFreeCacheSetSmallDataWithTTL(b *testing.B) {
-	c := freecache.NewCache(100 * 1024 * 1024)
-	benchmark(b, smallData, ttl,
-		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), 1) },
-		func(k string) { c.Get([]byte(k)) })
-}
-func BenchmarkFreeCacheSetBigDataNoTTL(b *testing.B) {
-	c := freecache.NewCache(100 * 1024 * 1024)
-	benchmark(b, bigData, NoTTL,
-		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), -1) },
-		func(k string) { c.Get([]byte(k)) })
-}
-func BenchmarkFreeCacheSetBigDataWithTTL(b *testing.B) {
-	c := freecache.NewCache(100 * 1024 * 1024)
-	benchmark(b, bigData, ttl,
-		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), 1) },
-		func(k string) { c.Get([]byte(k)) })
-}
+// func BenchmarkFastCacheSetSmallDataNoTTL(b *testing.B) {
+// 	fc := fastcache.New(20)
+// 	benchmark(b, smallData, NoTTL,
+// 		func(k, v string, t time.Duration) { fc.Set([]byte(k), []byte(v)) },
+// 		func(k string) {
+// 			var val []byte
+// 			val = fc.Get(val, []byte(k))
+// 		})
+// }
+// func BenchmarkFastCacheSetBigDataNoTTL(b *testing.B) {
+// 	fc := fastcache.New(20)
+// 	benchmark(b, bigData, NoTTL,
+// 		func(k, v string, t time.Duration) { fc.SetBig([]byte(k), []byte(v)) },
+// 		func(k string) {
+// 			var val []byte
+// 			val = fc.Get(val, []byte(k))
+// 		})
+// }
+// func BenchmarkFreeCacheSetSmallDataNoTTL(b *testing.B) {
+// 	c := freecache.NewCache(100 * 1024 * 1024)
+// 	benchmark(b, smallData, NoTTL,
+// 		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), -1) },
+// 		func(k string) { c.Get([]byte(k)) })
+// }
+// func BenchmarkFreeCacheSetSmallDataWithTTL(b *testing.B) {
+// 	c := freecache.NewCache(100 * 1024 * 1024)
+// 	benchmark(b, smallData, ttl,
+// 		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), 1) },
+// 		func(k string) { c.Get([]byte(k)) })
+// }
+// func BenchmarkFreeCacheSetBigDataNoTTL(b *testing.B) {
+// 	c := freecache.NewCache(100 * 1024 * 1024)
+// 	benchmark(b, bigData, NoTTL,
+// 		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), -1) },
+// 		func(k string) { c.Get([]byte(k)) })
+// }
+// func BenchmarkFreeCacheSetBigDataWithTTL(b *testing.B) {
+// 	c := freecache.NewCache(100 * 1024 * 1024)
+// 	benchmark(b, bigData, ttl,
+// 		func(k, v string, t time.Duration) { c.Set([]byte(k), []byte(v), 1) },
+// 		func(k string) { c.Get([]byte(k)) })
+// }
 func BenchmarkGCacheLRUSetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(20).LRU().Build()
 	benchmark(b, smallData, NoTTL,
@@ -411,24 +411,24 @@ func BenchmarkMCacheSetBigDataWithTTL(b *testing.B) {
 		func(k, v string, t time.Duration) { c.SetPointer(k, v, t) },
 		func(k string) { c.GetPointer(k) })
 }
-func BenchmarkBitcaskSetSmallDataNoTTL(b *testing.B) {
-	bc, _ := bitcask.Open("/tmp/db")
-	benchmark(b, smallData, NoTTL,
-		func(k, v string, t time.Duration) { bc.Put([]byte(k), []byte(v)) },
-		func(k string) { bc.Get([]byte(k)) })
-}
+// func BenchmarkBitcaskSetSmallDataNoTTL(b *testing.B) {
+// 	bc, _ := bitcask.Open("/tmp/db")
+// 	benchmark(b, smallData, NoTTL,
+// 		func(k, v string, t time.Duration) { bc.Put([]byte(k), []byte(v)) },
+// 		func(k string) { bc.Get([]byte(k)) })
+// }
 // func BenchmarkBitcaskSetSmallDataWithTTL(b *testing.B) {
 // 	bc, _ := bitcask.Open("/tmp/db")
 // 	benchmark(b, smallData, ttl,
 // 		func(k, v string, t time.Duration) { bc.Put([]byte(k), []byte(v)) },
 // 		func(k string) { bc.Get([]byte(k)) })
 // }
-func BenchmarkBitcaskSetBigDataNoTTL(b *testing.B) {
-	bc, _ := bitcask.Open("/tmp/db")
-	benchmark(b, bigData, NoTTL,
-		func(k, v string, t time.Duration) { bc.Put([]byte(k), []byte(v)) },
-		func(k string) { bc.Get([]byte(k)) })
-}
+// func BenchmarkBitcaskSetBigDataNoTTL(b *testing.B) {
+// 	bc, _ := bitcask.Open("/tmp/db")
+// 	benchmark(b, bigData, NoTTL,
+// 		func(k, v string, t time.Duration) { bc.Put([]byte(k), []byte(v)) },
+// 		func(k string) { bc.Get([]byte(k)) })
+// }
 // func BenchmarkBitcaskSetBigDataWithTTL(b *testing.B) {
 // 	bc, _ := bitcask.Open("/tmp/db")
 // 	benchmark(b, bigData, ttl,
