@@ -1,4 +1,4 @@
-GO_VERSION := 1.26.0
+GO_VERSION :="1.26.1"
 GOPATH := $(eval GOPATH := $(shell go env GOPATH))$(GOPATH)
 GOLINES_MAX_WIDTH     ?= 200
 
@@ -37,6 +37,10 @@ deps: \
 bench: deps
 	sleep 3
 	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem
+
+bench-custom: deps
+	sleep 3
+	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem -benchparallelism="$(BENCH_PARALLELISM)"
 
 init:
 	GO111MODULE=on go mod init github.com/kpango/go-cache-lib-benchmarks
