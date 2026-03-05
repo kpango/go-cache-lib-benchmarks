@@ -5,9 +5,13 @@ import (
 	// "github.com/VictoriaMetrics/fastcache"
 	// "github.com/coocood/freecache"
 	// mcache "github.com/OrlovEvgeny/go-mcache"
+	"flag"
+	"fmt"
 	"math/rand"
+	"os"
 	"runtime"
 	"slices"
+	"strconv"
 	"strings"
 	"sync"
 	"testing"
@@ -70,10 +74,16 @@ const NoTTL = time.Duration(-1)
 // handle negative TTL values correctly.
 const bigCacheNoTTL = 24 * time.Hour
 
+// benchParallelismFlag holds the raw flag value for -benchparallelism.
+var benchParallelismFlag string
+
+// parallelismValues is the set of parallelism levels used by all benchmarks.
+// It is populated from -benchparallelism (comma-separated integers) in
+// TestMain; the default is []int{100, 1000, 10000}.
+var parallelismValues []int
+
 var (
 	ttl time.Duration = 50 * time.Millisecond
-
-	parallelism = 10000
 
 	bigDataLen   = 2 << 10
 	bigDataCount = 2 << 16
@@ -92,11 +102,28 @@ var (
 )
 
 func init() {
+	flag.StringVar(&benchParallelismFlag, "benchparallelism", "", "comma-separated list of parallelism values for benchmarks (default: 100,1000,10000)")
 	for range bigDataCount {
 		bigData[randStr(bigDataLen)] = randStr(bigDataLen)
 	}
 	smallDataSlice = mapToSlice(smallData)
 	bigDataSlice = mapToSlice(bigData)
+}
+
+func TestMain(m *testing.M) {
+	flag.Parse()
+	if benchParallelismFlag != "" {
+		for _, s := range strings.Split(benchParallelismFlag, ",") {
+			v, err := strconv.Atoi(strings.TrimSpace(s))
+			if err == nil && v > 0 {
+				parallelismValues = append(parallelismValues, v)
+			}
+		}
+	}
+	if len(parallelismValues) == 0 {
+		parallelismValues = []int{100, 1000, 10000}
+	}
+	os.Exit(m.Run())
 }
 
 var randSrc = rand.NewSource(time.Now().UnixNano())
@@ -126,50 +153,61 @@ func randStr(n int) string {
 	return string(b)
 }
 
-// benchmark runs a mixed set-and-get workload benchmark.
+// benchmark runs a mixed set-and-get workload benchmark for each configured
+// parallelism value, emitting sub-benchmarks named "P<n>".
 func benchmark(b *testing.B, data []keyValue,
 	t time.Duration,
 	set func(string, string, time.Duration),
 	get func(string),
 ) {
 	b.Helper()
-	b.SetParallelism(parallelism)
-	b.ReportAllocs()
-	runtime.GC()
-	b.ResetTimer()
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			for _, kv := range data {
-				set(kv.key, kv.value, t)
-			}
-			for _, kv := range data {
-				get(kv.key)
-			}
-		}
-	})
+	for _, p := range parallelismValues {
+		b.Run(fmt.Sprintf("P%d", p), func(b *testing.B) {
+			b.SetParallelism(p)
+			b.ReportAllocs()
+			runtime.GC()
+			b.ResetTimer()
+			b.RunParallel(func(pb *testing.PB) {
+				for pb.Next() {
+					for _, kv := range data {
+						set(kv.key, kv.value, t)
+					}
+					for _, kv := range data {
+						get(kv.key)
+					}
+				}
+			})
+		})
+	}
 }
 
-// benchmarkSetOnly runs a write-only workload benchmark.
+// benchmarkSetOnly runs a write-only workload benchmark for each configured
+// parallelism value, emitting sub-benchmarks named "P<n>".
 func benchmarkSetOnly(b *testing.B, data []keyValue,
 	t time.Duration,
 	set func(string, string, time.Duration),
 ) {
 	b.Helper()
-	b.SetParallelism(parallelism)
-	b.ReportAllocs()
-	runtime.GC()
-	b.ResetTimer()
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			for _, kv := range data {
-				set(kv.key, kv.value, t)
-			}
-		}
-	})
+	for _, p := range parallelismValues {
+		b.Run(fmt.Sprintf("P%d", p), func(b *testing.B) {
+			b.SetParallelism(p)
+			b.ReportAllocs()
+			runtime.GC()
+			b.ResetTimer()
+			b.RunParallel(func(pb *testing.PB) {
+				for pb.Next() {
+					for _, kv := range data {
+						set(kv.key, kv.value, t)
+					}
+				}
+			})
+		})
+	}
 }
 
 // benchmarkGetOnly runs a read-only workload benchmark. The cache is
 // pre-populated before timing begins to isolate read performance.
+// Each configured parallelism value produces a sub-benchmark named "P<n>".
 func benchmarkGetOnly(b *testing.B, data []keyValue,
 	t time.Duration,
 	setup func(string, string, time.Duration),
@@ -179,17 +217,21 @@ func benchmarkGetOnly(b *testing.B, data []keyValue,
 	for _, kv := range data {
 		setup(kv.key, kv.value, t)
 	}
-	b.SetParallelism(parallelism)
-	b.ReportAllocs()
-	runtime.GC()
-	b.ResetTimer()
-	b.RunParallel(func(pb *testing.PB) {
-		for pb.Next() {
-			for _, kv := range data {
-				get(kv.key)
-			}
-		}
-	})
+	for _, p := range parallelismValues {
+		b.Run(fmt.Sprintf("P%d", p), func(b *testing.B) {
+			b.SetParallelism(p)
+			b.ReportAllocs()
+			runtime.GC()
+			b.ResetTimer()
+			b.RunParallel(func(pb *testing.PB) {
+				for pb.Next() {
+					for _, kv := range data {
+						get(kv.key)
+					}
+				}
+			})
+		})
+	}
 }
 
 func BenchmarkDefaultMapSetSmallDataNoTTL(b *testing.B) {

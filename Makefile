@@ -38,6 +38,10 @@ bench: deps
 	sleep 3
 	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem
 
+bench-custom: deps
+	sleep 3
+	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem -benchparallelism="$(BENCH_PARALLELISM)"
+
 init:
 	GO111MODULE=on go mod init github.com/kpango/go-cache-lib-benchmarks
 	GO111MODULE=on go mod tidy
