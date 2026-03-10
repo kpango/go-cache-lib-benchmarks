@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="840" height="600">\n<path  d="M 0 0
+L 840 0
+L 840 600
+L 0 600
+L 0 0" style="stroke-width:0;stroke:rgba(255,255,255,1.0);fill:rgba(255,255,255,1.0)"/><path  d="M 20 46
+L 719 46
+L 719 565
+L 20 565
+L 20 46" style="stroke-width:0;stroke:rgba(255,255,255,1.0);fill:rgba(255,255,255,1.0)"/><path  d="M 39 565
+L 89 565
+L 89 565
+L 39 565
+L 39 565" style="stroke-width:3;stroke:rgba(106,195,203,1.0);fill:rgba(106,195,203,1.0)"/><path  d="M 127 564
+L 177 564
+L 177 565
+L 127 565
+L 127 564" style="stroke-width:3;stroke:rgba(42,190,137,1.0);fill:rgba(42,190,137,1.0)"/><path  d="M 215 563
+L 265 563
+L 265 565
+L 215 565
+L 215 563" style="stroke-width:3;stroke:rgba(110,128,139,1.0);fill:rgba(110,128,139,1.0)"/><path  d="M 303 563
+L 353 563
+L 353 565
+L 303 565
+L 303 563" style="stroke-width:3;stroke:rgba(240,174,90,1.0);fill:rgba(240,174,90,1.0)"/><path  d="M 391 560
+L 441 560
+L 441 565
+L 391 565
+L 391 560" style="stroke-width:3;stroke:rgba(0,116,217,1.0);fill:rgba(0,116,217,1.0)"/><path  d="M 479 560
+L 529 560
+L 529 565
+L 479 565
+L 479 560" style="stroke-width:3;stroke:rgba(0,217,101,1.0);fill:rgba(0,217,101,1.0)"/><path  d="M 567 558
+L 617 558
+L 617 565
+L 567 565
+L 567 558" style="stroke-width:3;stroke:rgba(217,0,116,1.0);fill:rgba(217,0,116,1.0)"/><path  d="M 655 46
+L 705 46
+L 705 565
+L 655 565
+L 655 46" style="stroke-width:3;stroke:rgba(0,217,210,1.0);fill:rgba(0,217,210,1.0)"/><path  d="M 20 565
+L 719 565" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><path  d="M 20 565
+L 20 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="38" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">GacheV2</text><path  d="M 108 565
+L 108 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="122" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">TTLCache</text><path  d="M 196 565
+L 196 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="214" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">GoCache</text><path  d="M 284 565
+L 284 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="309" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">Gache</text><path  d="M 372 565
+L 372 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="382" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">GCacheLFU</text><path  d="M 460 565
+L 460 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="470" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">GCacheLRU</text><path  d="M 548 565
+L 548 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="557" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">GCacheARC</text><path  d="M 636 565
+L 636 570" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="652" y="587" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">BigCache</text><path  d="M 719 565
+L 719 46" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><path  d="M 719 565
+L 724 565" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="571" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">130711.00</text><path  d="M 719 525
+L 724 525" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="531" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">120130711.00</text><path  d="M 719 488
+L 724 488" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="494" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">230130711.00</text><path  d="M 719 451
+L 724 451" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="457" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">340130711.00</text><path  d="M 719 415
+L 724 415" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="421" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">450130711.00</text><path  d="M 719 378
+L 724 378" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="384" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">560130711.00</text><path  d="M 719 341
+L 724 341" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="347" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">670130711.00</text><path  d="M 719 305
+L 724 305" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="311" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">780130711.00</text><path  d="M 719 265
+L 724 265" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="271" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">900130711.00</text><path  d="M 719 228
+L 724 228" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="234" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">1010130711.00</text><path  d="M 719 191
+L 724 191" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="197" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">1120130711.00</text><path  d="M 719 155
+L 724 155" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="161" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">1230130711.00</text><path  d="M 719 118
+L 724 118" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="124" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">1340130711.00</text><path  d="M 719 81
+L 724 81" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="87" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">1450130711.00</text><path  d="M 719 46
+L 724 46" style="stroke-width:0;stroke:rgba(51,51,51,1.0);fill:none"/><text x="729" y="52" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:12.8px;font-family:'Roboto Medium',sans-serif">1558084768.00</text><path  d="M 20 565
+L 719 565" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 525
+L 719 525" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 488
+L 719 488" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 451
+L 719 451" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 415
+L 719 415" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 378
+L 719 378" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 341
+L 719 341" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 305
+L 719 305" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 265
+L 719 265" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 228
+L 719 228" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 191
+L 719 191" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 155
+L 719 155" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 118
+L 719 118" style="stroke-width:0;stroke:none;fill:none"/><path  d="M 20 81
+L 719 81" style="stroke-width:0;stroke:none;fill:none"/><text x="226" y="33" style="stroke-width:0;stroke:none;fill:rgba(51,51,51,1.0);font-size:23.0px;font-family:'Roboto Medium',sans-serif">BigData WithTTL P1000 - BytesPerOp</text></svg>

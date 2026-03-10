@@ -5,6 +5,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"sort"
 	"strconv"
@@ -79,6 +80,12 @@ func main() {
 		grouped[key] = append(grouped[key], res)
 	}
 
+	err = os.MkdirAll("../images", 0755)
+	if err != nil {
+		fmt.Printf("Error creating images directory: %v\n", err)
+		return
+	}
+
 	for key, group := range grouped {
 		generateCharts(key, group)
 	}
@@ -125,7 +132,9 @@ func generateChart(key GroupKey, results []BenchmarkResult, metricName string, g
 	}
 
 	filename := fmt.Sprintf("%s_%s_P%s_%s.svg", key.DataPattern, key.TTL, key.Parallelism, metricName)
-	f, err := os.Create(filename)
+	outPath := filepath.Join("../images", filename)
+
+	f, err := os.Create(outPath)
 	if err != nil {
 		fmt.Println("Error creating file:", err)
 		return
