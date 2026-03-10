@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"os"
 	"regexp"
@@ -28,33 +29,18 @@ type GroupKey struct {
 }
 
 func main() {
-	file, err := os.Open("../README.md")
+	fileName := flag.String("f", "../README.md", "Filename to read benchmark results from")
+	flag.Parse()
+
+	file, err := os.Open(*fileName)
 	if err != nil {
-		fmt.Println("Error opening README.md:", err)
+		fmt.Printf("Error opening %s: %v\n", *fileName, err)
 		return
 	}
 	defer file.Close()
 
 	var results []BenchmarkResult
 
-	// Benchmark{Cache Lib Name}SetGet{Data Pattern}{TTL on/off}/P{Parallelism}-{CPU Cores}
-	// Example: BenchmarkDefaultMapSetGetSmallDataNoTTL/P100-128
-	// Let's use more generic non-greedy capture groups.
-	// 1: LibName (.+?)
-	// 2: DataPattern (.+?)
-	// 3: TTL (NoTTL|WithTTL|.*TTL) -> actually just (.+?)
-	// It's a bit tricky because both DataPattern and TTL are contiguous without delimiters.
-	// But usually it ends with "NoTTL" or "WithTTL".
-	// Let's assume TTL ends with "TTL". So (.*)(NoTTL|WithTTL|.*TTL)
-	// Or we can just capture everything between SetGet and /P as one group, or split it if we know the suffixes.
-	// Since the user asked for {Data Pattern}{TTL on/off}, let's try:
-	// ^Benchmark(.+?)SetGet(.+?)(NoTTL|WithTTL|OffTTL|OnTTL|TTL.*)/P(\d+)-\d+\s+\d+\s+([\d.]+)\s+ns/op\s+(\d+)\s+B/op\s+(\d+)\s+allocs/op
-	// Wait, we don't know the exact TTL string. We can just use (.+?)(NoTTL|WithTTL|On|Off|Yes|No) if they follow a pattern, but "NoTTL|WithTTL" is standard here.
-	// Let's use (.+?)(NoTTL|WithTTL) to be safe with the current data, OR we can capture everything and not split them.
-	// "Benchの命名には規則があり、 Benchmark{Cache Lib Name}SetGet{Data Pattern}{TTL on/off}/P{Parallelism}-{CPU Cores}"
-	// If the TTL is arbitrary, (.+?) might not know where DataPattern ends.
-	// Let's capture `(.+?)` for DataPattern and `((?:With|No)TTL)` or similar. Let's look at the data again.
-	// The data has SmallDataNoTTL, SmallDataWithTTL, BigDataNoTTL, BigDataWithTTL.
 	re := regexp.MustCompile(`^Benchmark(.+?)SetGet(.+?)(NoTTL|WithTTL)/P(\d+)-\d+\s+\d+\s+([\d.]+)\s+ns/op\s+([\d.]+)\s+B/op\s+([\d.]+)\s+allocs/op`)
 
 	scanner := bufio.NewScanner(file)
@@ -79,7 +65,7 @@ func main() {
 	}
 
 	if err := scanner.Err(); err != nil {
-		fmt.Println("Error reading README.md:", err)
+		fmt.Printf("Error reading %s: %v\n", *fileName, err)
 		return
 	}
 
@@ -120,7 +106,6 @@ func generateChart(key GroupKey, results []BenchmarkResult, metricName string, g
 		})
 	}
 
-	// Calculate a suitable width based on the number of bars
 	width := 200 + len(values)*80
 
 	barChart := chart.BarChart{
