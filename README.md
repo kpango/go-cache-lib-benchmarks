@@ -119,3 +119,113 @@ BenchmarkGCacheARCSetGetBigDataWithTTL/P10000-128   	       3	 384577490 ns/op	5
 PASS
 ok  	github.com/kpango/go-cache-lib-benchmarks	2326.540s
 ```
+
+## Benchmark Charts
+
+### BigData_NoTTL_P10000_AllocsPerOp
+![BigData_NoTTL_P10000_AllocsPerOp.svg](images/BigData_NoTTL_P10000_AllocsPerOp.svg)
+
+### BigData_NoTTL_P10000_BytesPerOp
+![BigData_NoTTL_P10000_BytesPerOp.svg](images/BigData_NoTTL_P10000_BytesPerOp.svg)
+
+### BigData_NoTTL_P10000_NsPerOp
+![BigData_NoTTL_P10000_NsPerOp.svg](images/BigData_NoTTL_P10000_NsPerOp.svg)
+
+### BigData_NoTTL_P1000_AllocsPerOp
+![BigData_NoTTL_P1000_AllocsPerOp.svg](images/BigData_NoTTL_P1000_AllocsPerOp.svg)
+
+### BigData_NoTTL_P1000_BytesPerOp
+![BigData_NoTTL_P1000_BytesPerOp.svg](images/BigData_NoTTL_P1000_BytesPerOp.svg)
+
+### BigData_NoTTL_P1000_NsPerOp
+![BigData_NoTTL_P1000_NsPerOp.svg](images/BigData_NoTTL_P1000_NsPerOp.svg)
+
+### BigData_NoTTL_P100_AllocsPerOp
+![BigData_NoTTL_P100_AllocsPerOp.svg](images/BigData_NoTTL_P100_AllocsPerOp.svg)
+
+### BigData_NoTTL_P100_BytesPerOp
+![BigData_NoTTL_P100_BytesPerOp.svg](images/BigData_NoTTL_P100_BytesPerOp.svg)
+
+### BigData_NoTTL_P100_NsPerOp
+![BigData_NoTTL_P100_NsPerOp.svg](images/BigData_NoTTL_P100_NsPerOp.svg)
+
+### BigData_WithTTL_P10000_AllocsPerOp
+![BigData_WithTTL_P10000_AllocsPerOp.svg](images/BigData_WithTTL_P10000_AllocsPerOp.svg)
+
+### BigData_WithTTL_P10000_BytesPerOp
+![BigData_WithTTL_P10000_BytesPerOp.svg](images/BigData_WithTTL_P10000_BytesPerOp.svg)
+
+### BigData_WithTTL_P10000_NsPerOp
+![BigData_WithTTL_P10000_NsPerOp.svg](images/BigData_WithTTL_P10000_NsPerOp.svg)
+
+### BigData_WithTTL_P1000_AllocsPerOp
+![BigData_WithTTL_P1000_AllocsPerOp.svg](images/BigData_WithTTL_P1000_AllocsPerOp.svg)
+
+### BigData_WithTTL_P1000_BytesPerOp
+![BigData_WithTTL_P1000_BytesPerOp.svg](images/BigData_WithTTL_P1000_BytesPerOp.svg)
+
+### BigData_WithTTL_P1000_NsPerOp
+![BigData_WithTTL_P1000_NsPerOp.svg](images/BigData_WithTTL_P1000_NsPerOp.svg)
+
+### BigData_WithTTL_P100_AllocsPerOp
+![BigData_WithTTL_P100_AllocsPerOp.svg](images/BigData_WithTTL_P100_AllocsPerOp.svg)
+
+### BigData_WithTTL_P100_BytesPerOp
+![BigData_WithTTL_P100_BytesPerOp.svg](images/BigData_WithTTL_P100_BytesPerOp.svg)
+
+### BigData_WithTTL_P100_NsPerOp
+![BigData_WithTTL_P100_NsPerOp.svg](images/BigData_WithTTL_P100_NsPerOp.svg)
+
+### SmallData_NoTTL_P10000_AllocsPerOp
+![SmallData_NoTTL_P10000_AllocsPerOp.svg](images/SmallData_NoTTL_P10000_AllocsPerOp.svg)
+
+### SmallData_NoTTL_P10000_BytesPerOp
+![SmallData_NoTTL_P10000_BytesPerOp.svg](images/SmallData_NoTTL_P10000_BytesPerOp.svg)
+
+### SmallData_NoTTL_P10000_NsPerOp
+![SmallData_NoTTL_P10000_NsPerOp.svg](images/SmallData_NoTTL_P10000_NsPerOp.svg)
+
+### SmallData_NoTTL_P1000_AllocsPerOp
+![SmallData_NoTTL_P1000_AllocsPerOp.svg](images/SmallData_NoTTL_P1000_AllocsPerOp.svg)
+
+### SmallData_NoTTL_P1000_BytesPerOp
+![SmallData_NoTTL_P1000_BytesPerOp.svg](images/SmallData_NoTTL_P1000_BytesPerOp.svg)
+
+### SmallData_NoTTL_P1000_NsPerOp
+![SmallData_NoTTL_P1000_NsPerOp.svg](images/SmallData_NoTTL_P1000_NsPerOp.svg)
+
+### SmallData_NoTTL_P100_AllocsPerOp
+![SmallData_NoTTL_P100_AllocsPerOp.svg](images/SmallData_NoTTL_P100_AllocsPerOp.svg)
+
+### SmallData_NoTTL_P100_BytesPerOp
+![SmallData_NoTTL_P100_BytesPerOp.svg](images/SmallData_NoTTL_P100_BytesPerOp.svg)
+
+### SmallData_NoTTL_P100_NsPerOp
+![SmallData_NoTTL_P100_NsPerOp.svg](images/SmallData_NoTTL_P100_NsPerOp.svg)
+
+### SmallData_WithTTL_P10000_AllocsPerOp
+![SmallData_WithTTL_P10000_AllocsPerOp.svg](images/SmallData_WithTTL_P10000_AllocsPerOp.svg)
+
+### SmallData_WithTTL_P10000_BytesPerOp
+![SmallData_WithTTL_P10000_BytesPerOp.svg](images/SmallData_WithTTL_P10000_BytesPerOp.svg)
+
+### SmallData_WithTTL_P10000_NsPerOp
+![SmallData_WithTTL_P10000_NsPerOp.svg](images/SmallData_WithTTL_P10000_NsPerOp.svg)
+
+### SmallData_WithTTL_P1000_AllocsPerOp
+![SmallData_WithTTL_P1000_AllocsPerOp.svg](images/SmallData_WithTTL_P1000_AllocsPerOp.svg)
+
+### SmallData_WithTTL_P1000_BytesPerOp
+![SmallData_WithTTL_P1000_BytesPerOp.svg](images/SmallData_WithTTL_P1000_BytesPerOp.svg)
+
+### SmallData_WithTTL_P1000_NsPerOp
+![SmallData_WithTTL_P1000_NsPerOp.svg](images/SmallData_WithTTL_P1000_NsPerOp.svg)
+
+### SmallData_WithTTL_P100_AllocsPerOp
+![SmallData_WithTTL_P100_AllocsPerOp.svg](images/SmallData_WithTTL_P100_AllocsPerOp.svg)
+
+### SmallData_WithTTL_P100_BytesPerOp
+![SmallData_WithTTL_P100_BytesPerOp.svg](images/SmallData_WithTTL_P100_BytesPerOp.svg)
+
+### SmallData_WithTTL_P100_NsPerOp
+![SmallData_WithTTL_P100_NsPerOp.svg](images/SmallData_WithTTL_P100_NsPerOp.svg)
