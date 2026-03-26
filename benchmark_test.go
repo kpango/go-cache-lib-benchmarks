@@ -8,7 +8,6 @@ import (
 	"flag"
 	"fmt"
 	"math/rand"
-	"os"
 	"runtime"
 	"slices"
 	"strconv"
@@ -49,71 +48,60 @@ func (m *DefaultMap) Set(key, val any) {
 	m.data[key] = val
 }
 
-// keyValue holds a pre-computed key-value pair for deterministic benchmark iteration.
-type keyValue struct {
-	key   string
-	value string
-}
-
-// mapToSlice converts a map to a sorted slice of keyValue pairs.
-// Sorting ensures deterministic iteration order across benchmark runs.
-func mapToSlice(m map[string]string) []keyValue {
-	kvs := make([]keyValue, 0, len(m))
-	for k, v := range m {
-		kvs = append(kvs, keyValue{key: k, value: v})
-	}
-	slices.SortFunc(kvs, func(a, b keyValue) int {
-		return strings.Compare(a.key, b.key)
-	})
-	return kvs
-}
-
 const NoTTL = time.Duration(-1)
 
 // bigCacheNoTTL uses a large positive duration for BigCache since it does not
 // handle negative TTL values correctly.
 const bigCacheNoTTL = 24 * time.Hour
 
-// benchParallelismFlag holds the raw flag value for -benchparallelism.
 var benchParallelismFlag string
 
-// parallelismValues is the set of parallelism levels used by all benchmarks.
-// It is populated from -benchparallelism (comma-separated integers) in
-// TestMain; the default is []int{100, 1000, 10000}.
 var parallelismValues []int
+
+type keyValue struct {
+	key   string
+	value string
+}
 
 var (
 	ttl time.Duration = 50 * time.Millisecond
 
-	bigDataLen   = 2 << 10
-	bigDataCount = 2 << 16
-	bigData      = make(map[string]string, bigDataCount)
-
-	smallData = map[string]string{
-		"string": "aaaa",
-		"int":    "123",
-		"float":  "99.99",
-		"struct": "struct{}{}",
-	}
-
-	// Pre-computed slices for deterministic iteration order in benchmarks.
-	smallDataSlice []keyValue
-	bigDataSlice   []keyValue
+	smallData []keyValue
+	bigData   []keyValue
 )
 
 func init() {
-	flag.StringVar(&benchParallelismFlag, "benchparallelism", "", "comma-separated list of parallelism values for benchmarks (default: 100,1000,10000)")
-	for range bigDataCount {
-		bigData[randStr(bigDataLen)] = randStr(bigDataLen)
-	}
-	smallDataSlice = mapToSlice(smallData)
-	bigDataSlice = mapToSlice(bigData)
-}
+	flag.StringVar(&benchParallelismFlag, "benchparallelism", "", "comma-separated list of parallelism values for benchmarks (default: 100,1000,5000,10000)")
 
-func TestMain(m *testing.M) {
-	flag.Parse()
+	var (
+		bigDataLen     = 2 << 10
+		bigDataCount   = 2 << 16
+		smallDataLen   = 2 << 5
+		smallDataCount = 2 << 3
+	)
+	bigData = make([]keyValue, 0, bigDataCount)
+	for range bigDataCount {
+		bigData = append(bigData, keyValue{
+			key:   randStr(bigDataLen),
+			value: randStr(bigDataLen),
+		})
+	}
+	slices.SortFunc(bigData, func(a, b keyValue) int {
+		return strings.Compare(a.key, b.key)
+	})
+	smallData = make([]keyValue, 0, smallDataCount)
+	for range smallDataCount {
+		smallData = append(smallData, keyValue{
+			key:   randStr(smallDataLen),
+			value: randStr(smallDataLen),
+		})
+	}
+	slices.SortFunc(smallData, func(a, b keyValue) int {
+		return strings.Compare(a.key, b.key)
+	})
+
 	if benchParallelismFlag != "" {
-		for _, s := range strings.Split(benchParallelismFlag, ",") {
+		for s := range strings.SplitSeq(benchParallelismFlag, ",") {
 			v, err := strconv.Atoi(strings.TrimSpace(s))
 			if err == nil && v > 0 {
 				parallelismValues = append(parallelismValues, v)
@@ -123,10 +111,9 @@ func TestMain(m *testing.M) {
 	if len(parallelismValues) == 0 {
 		parallelismValues = []int{100, 1000, 10000}
 	}
-	os.Exit(m.Run())
 }
 
-var randSrc = rand.NewSource(time.Now().UnixNano())
+var randSrc = rand.NewSource(42)
 
 const (
 	rs6Letters       = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
@@ -153,32 +140,41 @@ func randStr(n int) string {
 	return string(b)
 }
 
-// benchmark runs a mixed set-and-get workload benchmark for each configured
-// parallelism value, emitting sub-benchmarks named "P<n>".
 func benchmark(b *testing.B, data []keyValue,
 	t time.Duration,
 	set func(string, string, time.Duration),
 	get func(string),
 ) {
 	b.Helper()
+	nprocs := runtime.GOMAXPROCS(0)
 	for _, p := range parallelismValues {
 		b.Run(fmt.Sprintf("P%d", p), func(b *testing.B) {
-			b.SetParallelism(p)
-			b.ReportAllocs()
-			runtime.GC()
-			b.ResetTimer()
-			b.RunParallel(func(pb *testing.PB) {
-				for pb.Next() {
-					for _, kv := range data {
-						set(kv.key, kv.value, t)
-					}
-					for _, kv := range data {
-						get(kv.key)
-					}
+			mp := max(p/nprocs, 1)
+			b.SetParallelism(mp)
+			runBenchParallel(b, func(_ *testing.PB, _ int) {
+				for _, kv := range data {
+					set(kv.key, kv.value, t)
+				}
+				for _, kv := range data {
+					get(kv.key)
 				}
 			})
 		})
 	}
+}
+
+func runBenchParallel(b *testing.B, f func(pb *testing.PB, i int)) {
+	b.Helper()
+	runtime.GC()
+	b.ReportAllocs()
+	b.ResetTimer()
+	b.RunParallel(func(pb *testing.PB) {
+		var i int
+		for pb.Next() {
+			f(pb, i)
+			i++
+		}
+	})
 }
 
 // benchmarkSetOnly runs a write-only workload benchmark for each configured
@@ -236,42 +232,42 @@ func benchmarkGetOnly(b *testing.B, data []keyValue,
 
 func BenchmarkDefaultMapSetGetSmallDataNoTTL(b *testing.B) {
 	m := NewDefault()
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { m.Set(k, v) },
 		func(k string) { m.Get(k) })
 }
 
 func BenchmarkDefaultMapSetGetBigDataNoTTL(b *testing.B) {
 	m := NewDefault()
-	benchmark(b, bigDataSlice, NoTTL,
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { m.Set(k, v) },
 		func(k string) { m.Get(k) })
 }
 
 func BenchmarkSyncMapSetGetSmallDataNoTTL(b *testing.B) {
 	var m sync.Map
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { m.Store(k, v) },
 		func(k string) { m.Load(k) })
 }
 
 func BenchmarkSyncMapSetGetBigDataNoTTL(b *testing.B) {
 	var m sync.Map
-	benchmark(b, bigDataSlice, NoTTL,
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { m.Store(k, v) },
 		func(k string) { m.Load(k) })
 }
 
 func BenchmarkGacheV2SetGetSmallDataNoTTL(b *testing.B) {
 	g := gachev2.New(gachev2.WithDefaultExpiration[string](gachev2.NoTTL))
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheV2SetGetSmallDataWithTTL(b *testing.B) {
 	g := gachev2.New(gachev2.WithDefaultExpiration[string](ttl))
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
 		func(k string) { g.Get(k) })
 }
@@ -280,7 +276,7 @@ func BenchmarkGacheV2SetGetBigDataNoTTL(b *testing.B) {
 	g := gachev2.New(
 		gachev2.WithDefaultExpiration[string](gachev2.NoTTL),
 		gachev2.WithMaxKeyLength[string](0))
-	benchmark(b, bigDataSlice, NoTTL,
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
@@ -289,95 +285,95 @@ func BenchmarkGacheV2SetGetBigDataWithTTL(b *testing.B) {
 	g := gachev2.New(
 		gachev2.WithDefaultExpiration[string](ttl),
 		gachev2.WithMaxKeyLength[string](0))
-	benchmark(b, bigDataSlice, ttl,
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheSetGetSmallDataNoTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(NoTTL)
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheSetGetSmallDataWithTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(ttl)
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheSetGetBigDataNoTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(NoTTL)
-	benchmark(b, bigDataSlice, NoTTL,
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheSetGetBigDataWithTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(ttl)
-	benchmark(b, bigDataSlice, ttl,
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { g.SetWithExpire(k, v, t) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkTTLCacheSetGetSmallDataNoTTL(b *testing.B) {
 	cache := ttlcache.New[string, string]()
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { cache.Set(k, v, ttlcache.NoTTL) },
 		func(k string) { cache.Get(k) })
 }
 
 func BenchmarkTTLCacheSetGetSmallDataWithTTL(b *testing.B) {
-	cache := ttlcache.New[string, string](
+	cache := ttlcache.New(
 		ttlcache.WithTTL[string, string](ttl),
 	)
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { cache.Set(k, v, t) },
 		func(k string) { cache.Get(k) })
 }
 
 func BenchmarkTTLCacheSetGetBigDataNoTTL(b *testing.B) {
 	cache := ttlcache.New[string, string]()
-	benchmark(b, bigDataSlice, NoTTL,
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { cache.Set(k, v, ttlcache.NoTTL) },
 		func(k string) { cache.Get(k) })
 }
 
 func BenchmarkTTLCacheSetGetBigDataWithTTL(b *testing.B) {
-	cache := ttlcache.New[string, string](
+	cache := ttlcache.New(
 		ttlcache.WithTTL[string, string](ttl),
 	)
-	benchmark(b, bigDataSlice, ttl,
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { cache.Set(k, v, t) },
 		func(k string) { cache.Get(k) })
 }
 
 func BenchmarkGoCacheSetGetSmallDataNoTTL(b *testing.B) {
 	c := gocache.New(gocache.NoExpiration, gocache.NoExpiration)
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGoCacheSetGetSmallDataWithTTL(b *testing.B) {
 	c := gocache.New(ttl, ttl)
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGoCacheSetGetBigDataNoTTL(b *testing.B) {
 	c := gocache.New(gocache.NoExpiration, gocache.NoExpiration)
-	benchmark(b, bigDataSlice, NoTTL,
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGoCacheSetGetBigDataWithTTL(b *testing.B) {
 	c := gocache.New(ttl, ttl)
-	benchmark(b, bigDataSlice, ttl,
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) },
 		func(k string) { c.Get(k) })
 }
@@ -385,8 +381,8 @@ func BenchmarkGoCacheSetGetBigDataWithTTL(b *testing.B) {
 func BenchmarkBigCacheSetGetSmallDataNoTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmark(b, smallDataSlice, NoTTL,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
@@ -394,8 +390,8 @@ func BenchmarkBigCacheSetGetSmallDataNoTTL(b *testing.B) {
 func BenchmarkBigCacheSetGetSmallDataWithTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(ttl)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmark(b, smallDataSlice, ttl,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
@@ -403,8 +399,8 @@ func BenchmarkBigCacheSetGetSmallDataWithTTL(b *testing.B) {
 func BenchmarkBigCacheSetGetBigDataNoTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmark(b, bigDataSlice, NoTTL,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
@@ -412,8 +408,8 @@ func BenchmarkBigCacheSetGetBigDataNoTTL(b *testing.B) {
 func BenchmarkBigCacheSetGetBigDataWithTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(ttl)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmark(b, bigDataSlice, ttl,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
@@ -467,84 +463,84 @@ func BenchmarkBigCacheSetGetBigDataWithTTL(b *testing.B) {
 //	}
 func BenchmarkGCacheLRUSetGetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LRU().Build()
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLRUSetGetSmallDataWithTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LRU().Build()
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLRUSetGetBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LRU().Build()
-	benchmark(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).LRU().Build()
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLRUSetGetBigDataWithTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LRU().Build()
-	benchmark(b, bigDataSlice, ttl,
+	c := gcache.New(len(bigData)).LRU().Build()
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLFUSetGetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LFU().Build()
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLFUSetGetSmallDataWithTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LFU().Build()
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLFUSetGetBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LFU().Build()
-	benchmark(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).LFU().Build()
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLFUSetGetBigDataWithTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LFU().Build()
-	benchmark(b, bigDataSlice, ttl,
+	c := gcache.New(len(bigData)).LFU().Build()
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheARCSetGetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).ARC().Build()
-	benchmark(b, smallDataSlice, NoTTL,
+	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheARCSetGetSmallDataWithTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).ARC().Build()
-	benchmark(b, smallDataSlice, ttl,
+	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheARCSetGetBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).ARC().Build()
-	benchmark(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).ARC().Build()
+	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheARCSetGetBigDataWithTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).ARC().Build()
-	benchmark(b, bigDataSlice, ttl,
+	c := gcache.New(len(bigData)).ARC().Build()
+	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
@@ -553,31 +549,31 @@ func BenchmarkGCacheARCSetGetBigDataWithTTL(b *testing.B) {
 
 func BenchmarkDefaultMapSetOnlySmallDataNoTTL(b *testing.B) {
 	m := NewDefault()
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { m.Set(k, v) })
 }
 
 func BenchmarkDefaultMapSetOnlyBigDataNoTTL(b *testing.B) {
 	m := NewDefault()
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { m.Set(k, v) })
 }
 
 func BenchmarkSyncMapSetOnlySmallDataNoTTL(b *testing.B) {
 	var m sync.Map
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { m.Store(k, v) })
 }
 
 func BenchmarkSyncMapSetOnlyBigDataNoTTL(b *testing.B) {
 	var m sync.Map
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { m.Store(k, v) })
 }
 
 func BenchmarkGacheV2SetOnlySmallDataNoTTL(b *testing.B) {
 	g := gachev2.New(gachev2.WithDefaultExpiration[string](gachev2.NoTTL))
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) })
 }
 
@@ -585,95 +581,95 @@ func BenchmarkGacheV2SetOnlyBigDataNoTTL(b *testing.B) {
 	g := gachev2.New(
 		gachev2.WithDefaultExpiration[string](gachev2.NoTTL),
 		gachev2.WithMaxKeyLength[string](0))
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) })
 }
 
 func BenchmarkGacheSetOnlySmallDataNoTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(NoTTL)
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) })
 }
 
 func BenchmarkGacheSetOnlyBigDataNoTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(NoTTL)
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) })
 }
 
 func BenchmarkTTLCacheSetOnlySmallDataNoTTL(b *testing.B) {
 	cache := ttlcache.New[string, string]()
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { cache.Set(k, v, ttlcache.NoTTL) })
 }
 
 func BenchmarkTTLCacheSetOnlyBigDataNoTTL(b *testing.B) {
 	cache := ttlcache.New[string, string]()
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { cache.Set(k, v, ttlcache.NoTTL) })
 }
 
 func BenchmarkGoCacheSetOnlySmallDataNoTTL(b *testing.B) {
 	c := gocache.New(gocache.NoExpiration, gocache.NoExpiration)
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) })
 }
 
 func BenchmarkGoCacheSetOnlyBigDataNoTTL(b *testing.B) {
 	c := gocache.New(gocache.NoExpiration, gocache.NoExpiration)
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) })
 }
 
 func BenchmarkBigCacheSetOnlySmallDataNoTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) })
 }
 
 func BenchmarkBigCacheSetOnlyBigDataNoTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) })
 }
 
 func BenchmarkGCacheLRUSetOnlySmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LRU().Build()
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) })
 }
 
 func BenchmarkGCacheLRUSetOnlyBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LRU().Build()
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).LRU().Build()
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) })
 }
 
 func BenchmarkGCacheLFUSetOnlySmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LFU().Build()
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) })
 }
 
 func BenchmarkGCacheLFUSetOnlyBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LFU().Build()
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).LRU().Build()
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) })
 }
 
 func BenchmarkGCacheARCSetOnlySmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).ARC().Build()
-	benchmarkSetOnly(b, smallDataSlice, NoTTL,
+	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) })
 }
 
 func BenchmarkGCacheARCSetOnlyBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).ARC().Build()
-	benchmarkSetOnly(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).ARC().Build()
+	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) })
 }
 
@@ -681,35 +677,35 @@ func BenchmarkGCacheARCSetOnlyBigDataNoTTL(b *testing.B) {
 
 func BenchmarkDefaultMapGetSmallDataNoTTL(b *testing.B) {
 	m := NewDefault()
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { m.Set(k, v) },
 		func(k string) { m.Get(k) })
 }
 
 func BenchmarkDefaultMapGetBigDataNoTTL(b *testing.B) {
 	m := NewDefault()
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { m.Set(k, v) },
 		func(k string) { m.Get(k) })
 }
 
 func BenchmarkSyncMapGetSmallDataNoTTL(b *testing.B) {
 	var m sync.Map
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { m.Store(k, v) },
 		func(k string) { m.Load(k) })
 }
 
 func BenchmarkSyncMapGetBigDataNoTTL(b *testing.B) {
 	var m sync.Map
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { m.Store(k, v) },
 		func(k string) { m.Load(k) })
 }
 
 func BenchmarkGacheV2GetSmallDataNoTTL(b *testing.B) {
 	g := gachev2.New(gachev2.WithDefaultExpiration[string](gachev2.NoTTL))
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
@@ -718,49 +714,49 @@ func BenchmarkGacheV2GetBigDataNoTTL(b *testing.B) {
 	g := gachev2.New(
 		gachev2.WithDefaultExpiration[string](gachev2.NoTTL),
 		gachev2.WithMaxKeyLength[string](0))
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheGetSmallDataNoTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(NoTTL)
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkGacheGetBigDataNoTTL(b *testing.B) {
 	g := gache.New().SetDefaultExpire(NoTTL)
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { g.Set(k, v) },
 		func(k string) { g.Get(k) })
 }
 
 func BenchmarkTTLCacheGetSmallDataNoTTL(b *testing.B) {
 	cache := ttlcache.New[string, string]()
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { cache.Set(k, v, ttlcache.NoTTL) },
 		func(k string) { cache.Get(k) })
 }
 
 func BenchmarkTTLCacheGetBigDataNoTTL(b *testing.B) {
 	cache := ttlcache.New[string, string]()
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { cache.Set(k, v, ttlcache.NoTTL) },
 		func(k string) { cache.Get(k) })
 }
 
 func BenchmarkGoCacheGetSmallDataNoTTL(b *testing.B) {
 	c := gocache.New(gocache.NoExpiration, gocache.NoExpiration)
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGoCacheGetBigDataNoTTL(b *testing.B) {
 	c := gocache.New(gocache.NoExpiration, gocache.NoExpiration)
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.Set(k, v, t) },
 		func(k string) { c.Get(k) })
 }
@@ -768,8 +764,8 @@ func BenchmarkGoCacheGetBigDataNoTTL(b *testing.B) {
 func BenchmarkBigCacheGetSmallDataNoTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
@@ -777,50 +773,50 @@ func BenchmarkBigCacheGetSmallDataNoTTL(b *testing.B) {
 func BenchmarkBigCacheGetBigDataNoTTL(b *testing.B) {
 	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
 	cfg.Verbose = false
-	bc, _ := bigcache.NewBigCache(cfg)
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	bc, _ := bigcache.New(b.Context(), cfg)
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
 
 func BenchmarkGCacheLRUGetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LRU().Build()
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLRUGetBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LRU().Build()
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).LRU().Build()
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLFUGetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).LFU().Build()
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheLFUGetBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).LFU().Build()
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).LFU().Build()
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheARCGetSmallDataNoTTL(b *testing.B) {
 	c := gcache.New(len(smallData)).ARC().Build()
-	benchmarkGetOnly(b, smallDataSlice, NoTTL,
+	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
 
 func BenchmarkGCacheARCGetBigDataNoTTL(b *testing.B) {
-	c := gcache.New(bigDataCount).ARC().Build()
-	benchmarkGetOnly(b, bigDataSlice, NoTTL,
+	c := gcache.New(len(bigData)).ARC().Build()
+	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { c.SetWithExpire(k, v, t) },
 		func(k string) { c.Get(k) })
 }
