@@ -597,8 +597,12 @@ const chartSectionMarkerStart = "<!-- benchmark-chart-section-start -->"
 // chartSectionMarkerEnd is the closing marker for the auto-generated section.
 const chartSectionMarkerEnd = "<!-- benchmark-chart-section-end -->"
 
+// htmlPreviewBaseURL is the base URL used to generate preview links for HTML charts.
+const htmlPreviewBaseURL = "https://htmlpreview.github.io/?https://github.com/kpango/go-cache-lib-benchmarks/blob/main/"
+
 // updateREADME inserts (or replaces) an auto-generated chart section at the end
-// of the README.md file.  The section embeds all generated SVG charts.
+// of the README.md file.  The section embeds all generated SVG charts and adds
+// preview links to the interactive HTML versions.
 func updateREADME(readmePath string, keys []GroupKey) {
 	// Sort keys for deterministic order: BigData before SmallData, NoTTL before WithTTL.
 	sort.Slice(keys, func(i, j int) bool {
@@ -621,9 +625,11 @@ func updateREADME(readmePath string, keys []GroupKey) {
 	sb.WriteString("\n## Benchmark Charts\n\n")
 	for _, key := range keys {
 		svgFile := fmt.Sprintf("images/%s_%s_3d_chart.svg", key.DataPattern, key.TTL)
+		htmlFile := fmt.Sprintf("images/%s_%s_3d_chart.html", key.DataPattern, key.TTL)
 		title := fmt.Sprintf("%s %s", key.DataPattern, key.TTL)
 		sb.WriteString(fmt.Sprintf("### %s\n\n", title))
 		sb.WriteString(fmt.Sprintf("![%s](%s)\n\n", title, svgFile))
+		sb.WriteString(fmt.Sprintf("[📊 View Interactive 3D Chart](%s%s)\n\n", htmlPreviewBaseURL, htmlFile))
 	}
 	sb.WriteString(chartSectionMarkerEnd + "\n")
 
