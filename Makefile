@@ -47,6 +47,9 @@ init:
 	GO111MODULE=on go mod tidy
 	go get -u ./...
 
+update-graph:
+	cd $(ROOTDIR)/visualize && go run main.go -f ../README.md
+
 format:
 	find ./ -type d -name .git -prune -o -type f -regex '.*[^\.pb]\.go' -print | xargs $(GOPATH)/bin/golines -w -m $(GOLINES_MAX_WIDTH)
 	find ./ -type d -name .git -prune -o -type f -regex '.*[^\.pb]\.go' -print | xargs $(GOPATH)/bin/gofumpt -w
