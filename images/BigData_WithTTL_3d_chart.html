@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Awesome go-echarts</title>
+    <script src="https://go-echarts.github.io/go-echarts-assets/assets/echarts.min.js"></script>
+    <script src="https://go-echarts.github.io/go-echarts-assets/assets/echarts@4.min.js"></script>
+    <script src="https://go-echarts.github.io/go-echarts-assets/assets/echarts-gl.min.js"></script>
+</head>
+
+<body><div class="container">
+    <div class="item" id="GsWPsggEsGYv" style="width:980px;height:700px;"></div>
+</div><script type="text/javascript">
+    "use strict";
+    let goecharts_GsWPsggEsGYv = echarts.init(document.getElementById('GsWPsggEsGYv'), "white", { renderer: "canvas" });
+    let option_GsWPsggEsGYv = {"color":["#5470c6","#91cc75","#fac858","#ee6666","#73c0de","#3ba272","#fc8452","#9a60b4","#ea7ccc"],"grid3D":{"boxWidth":200,"boxHeight":100,"boxDepth":80,"viewControl":{"autoRotate":true,"autoRotateSpeed":10}},"legend":{},"series":[{"name":"BigCache","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"BigCache P100","value":["P100",1146731984,227443]},{"name":"BigCache P1000","value":["P1000",1285453353,245789]},{"name":"BigCache P10000","value":["P10000",1145637657,282345]}],"itemStyle":{"color":"#1f77b4"}},{"name":"GCacheARC","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"GCacheARC P100","value":["P100",599410824,722191]},{"name":"GCacheARC P1000","value":["P1000",342562004,656032]},{"name":"GCacheARC P10000","value":["P10000",358504649,662089]}],"itemStyle":{"color":"#ff7f0e"}},{"name":"GCacheLFU","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"GCacheLFU P100","value":["P100",225341043,550601]},{"name":"GCacheLFU P1000","value":["P1000",240683175,550910]},{"name":"GCacheLFU P10000","value":["P10000",219953071,554540]}],"itemStyle":{"color":"#2ca02c"}},{"name":"GCacheLRU","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"GCacheLRU P100","value":["P100",238523025,576816]},{"name":"GCacheLRU P1000","value":["P1000",229796721,577123]},{"name":"GCacheLRU P10000","value":["P10000",220375684,580766]}],"itemStyle":{"color":"#d62728"}},{"name":"Gache","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"Gache P100","value":["P100",15364809,264687]},{"name":"Gache P1000","value":["P1000",10858465,263673]},{"name":"Gache P10000","value":["P10000",9236041,263780]}],"itemStyle":{"color":"#9467bd"}},{"name":"GacheV2","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"GacheV2 P100","value":["P100",5737008,861]},{"name":"GacheV2 P1000","value":["P1000",7967436,849]},{"name":"GacheV2 P10000","value":["P10000",11602256,482]}],"itemStyle":{"color":"#8c564b"}},{"name":"GoCache","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"GoCache P100","value":["P100",203293607,131168]},{"name":"GoCache P1000","value":["P1000",215343070,131476]},{"name":"GoCache P10000","value":["P10000",219402965,134447]}],"itemStyle":{"color":"#e377c2"}},{"name":"TTLCache","type":"line3D","coordinateSystem":"cartesian3D","data":[{"name":"TTLCache P100","value":["P100",288744365,135]},{"name":"TTLCache P1000","value":["P1000",291442235,526]},{"name":"TTLCache P10000","value":["P10000",271916601,4065]}],"itemStyle":{"color":"#7f7f7f"}}],"title":{"text":"BigData WithTTL — ProcessCount × Latency/Op × Alloc/Op"},"toolbox":{},"tooltip":{"show":true},"xAxis3D":{"name":"Process Count","type":"category","data":["P100","P1000","P10000"]},"yAxis3D":{"name":"Latency/Op (ns/op)","type":"value"},"zAxis3D":{"name":"Alloc/Op","type":"value"}}
+
+    goecharts_GsWPsggEsGYv.setOption(option_GsWPsggEsGYv);
+</script>
+<style>
+    .container {margin-top:30px; display: flex;justify-content: center;align-items: center;}
+    .item {margin: auto;}
+</style>
+</body>
+</html>
