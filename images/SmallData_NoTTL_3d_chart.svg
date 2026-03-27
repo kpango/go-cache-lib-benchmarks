@@ -57,55 +57,55 @@
   <line x1="387.9" y1="452.0" x2="391.9" y2="450.0" stroke="#555"/>
   <text x="384.9" y="453.0" text-anchor="end" font-family="sans-serif" font-size="11" dominant-baseline="middle">107</text>
   <text x="300.9" y="524.5" text-anchor="middle" font-family="sans-serif" font-size="13">Alloc/Op</text>
-  <line x1="391.9" y1="140.0" x2="561.9" y2="143.4" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="561.9" y1="143.4" x2="731.9" y2="163.2" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="391.9" y1="271.5" x2="561.9" y2="253.6" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="561.9" y1="253.6" x2="731.9" y2="274.5" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="391.9" y1="271.0" x2="561.9" y2="256.5" stroke="#d62728" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="561.9" y1="256.5" x2="731.9" y2="276.1" stroke="#d62728" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="391.9" y1="140.0" x2="561.9" y2="143.4" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="561.9" y1="143.4" x2="731.9" y2="163.2" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="391.9" y1="271.5" x2="561.9" y2="253.6" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="561.9" y1="253.6" x2="731.9" y2="274.5" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="391.9" y1="271.0" x2="561.9" y2="256.5" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="561.9" y1="256.5" x2="731.9" y2="276.1" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="391.9" y1="358.0" x2="561.9" y2="352.7" stroke="#bcbd22" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="561.9" y1="352.7" x2="731.9" y2="367.2" stroke="#bcbd22" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="391.9" y1="339.9" x2="561.9" y2="378.0" stroke="#1f77b4" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="561.9" y1="378.0" x2="731.9" y2="369.8" stroke="#1f77b4" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="391.9" y1="380.8" x2="561.9" y2="338.6" stroke="#ff7f0e" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="561.9" y1="338.6" x2="731.9" y2="362.7" stroke="#ff7f0e" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="391.9" y1="444.1" x2="561.9" y2="444.0" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="561.9" y1="444.0" x2="731.9" y2="443.8" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="391.9" y1="444.1" x2="561.9" y2="444.0" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="561.9" y1="444.0" x2="731.9" y2="443.8" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="391.9" y1="413.7" x2="561.9" y2="382.4" stroke="#7f7f7f" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="561.9" y1="382.4" x2="731.9" y2="413.5" stroke="#7f7f7f" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="391.9" y1="449.7" x2="561.9" y2="450.0" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="561.9" y1="450.0" x2="731.9" y2="450.0" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="391.9" y1="449.7" x2="561.9" y2="450.0" stroke="#d62728" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
+  <line x1="561.9" y1="450.0" x2="731.9" y2="450.0" stroke="#d62728" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="391.9" y1="343.0" x2="561.9" y2="307.8" stroke="#17becf" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
   <line x1="561.9" y1="307.8" x2="731.9" y2="357.0" stroke="#17becf" stroke-width="1.8" stroke-dasharray="10,5" opacity="0.65"/>
-  <line x1="391.9" y1="450.0" x2="561.9" y2="450.0" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="561.9" y1="450.0" x2="730.2" y2="451.0" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="366.4" y1="464.7" x2="536.4" y2="464.7" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="536.4" y1="464.7" x2="708.1" y2="463.7" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="342.6" y1="478.5" x2="512.6" y2="478.5" stroke="#d62728" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="512.6" y1="478.5" x2="682.6" y2="478.5" stroke="#d62728" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="391.9" y1="450.0" x2="561.9" y2="450.0" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="561.9" y1="450.0" x2="730.2" y2="451.0" stroke="#9467bd" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="366.4" y1="464.7" x2="536.4" y2="464.7" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="536.4" y1="464.7" x2="708.1" y2="463.7" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="342.6" y1="478.5" x2="512.6" y2="478.5" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="512.6" y1="478.5" x2="682.6" y2="478.5" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="291.6" y1="507.9" x2="461.6" y2="507.9" stroke="#bcbd22" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="461.6" y1="507.9" x2="631.6" y2="507.9" stroke="#bcbd22" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="264.4" y1="523.6" x2="434.4" y2="523.6" stroke="#1f77b4" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="434.4" y1="523.6" x2="604.4" y2="523.6" stroke="#1f77b4" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="264.4" y1="523.6" x2="434.4" y2="523.6" stroke="#ff7f0e" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="434.4" y1="523.6" x2="604.4" y2="523.6" stroke="#ff7f0e" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="264.4" y1="523.6" x2="434.4" y2="523.6" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="434.4" y1="523.6" x2="604.4" y2="523.6" stroke="#8c564b" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="264.4" y1="523.6" x2="434.4" y2="523.6" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="434.4" y1="523.6" x2="604.4" y2="523.6" stroke="#2ca02c" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="237.2" y1="539.3" x2="407.2" y2="539.3" stroke="#7f7f7f" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="407.2" y1="539.3" x2="577.2" y2="539.3" stroke="#7f7f7f" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="210.0" y1="555.0" x2="380.0" y2="555.0" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="380.0" y1="555.0" x2="550.0" y2="555.0" stroke="#e377c2" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="210.0" y1="555.0" x2="380.0" y2="555.0" stroke="#d62728" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
+  <line x1="380.0" y1="555.0" x2="550.0" y2="555.0" stroke="#d62728" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="210.0" y1="555.0" x2="380.0" y2="555.0" stroke="#17becf" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
   <line x1="380.0" y1="555.0" x2="550.0" y2="555.0" stroke="#17becf" stroke-width="1.8" stroke-dasharray="5,4" opacity="0.65"/>
-  <line x1="391.9" y1="140.0" x2="391.9" y2="450.0" stroke="#2ca02c" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="561.9" y1="143.4" x2="561.9" y2="450.0" stroke="#2ca02c" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="730.2" y1="164.2" x2="730.2" y2="451.0" stroke="#2ca02c" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="366.4" y1="286.2" x2="366.4" y2="464.7" stroke="#9467bd" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="536.4" y1="268.4" x2="536.4" y2="464.7" stroke="#9467bd" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="708.1" y1="288.2" x2="708.1" y2="463.7" stroke="#9467bd" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="342.6" y1="299.5" x2="342.6" y2="478.5" stroke="#d62728" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="512.6" y1="284.9" x2="512.6" y2="478.5" stroke="#d62728" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="682.6" y1="304.5" x2="682.6" y2="478.5" stroke="#d62728" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="391.9" y1="140.0" x2="391.9" y2="450.0" stroke="#9467bd" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="561.9" y1="143.4" x2="561.9" y2="450.0" stroke="#9467bd" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="730.2" y1="164.2" x2="730.2" y2="451.0" stroke="#9467bd" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="366.4" y1="286.2" x2="366.4" y2="464.7" stroke="#e377c2" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="536.4" y1="268.4" x2="536.4" y2="464.7" stroke="#e377c2" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="708.1" y1="288.2" x2="708.1" y2="463.7" stroke="#e377c2" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="342.6" y1="299.5" x2="342.6" y2="478.5" stroke="#8c564b" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="512.6" y1="284.9" x2="512.6" y2="478.5" stroke="#8c564b" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="682.6" y1="304.5" x2="682.6" y2="478.5" stroke="#8c564b" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="291.6" y1="415.9" x2="291.6" y2="507.9" stroke="#bcbd22" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="461.6" y1="410.6" x2="461.6" y2="507.9" stroke="#bcbd22" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="631.6" y1="425.1" x2="631.6" y2="507.9" stroke="#bcbd22" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
@@ -115,65 +115,65 @@
   <line x1="264.4" y1="454.4" x2="264.4" y2="523.6" stroke="#ff7f0e" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="434.4" y1="412.2" x2="434.4" y2="523.6" stroke="#ff7f0e" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="604.4" y1="436.3" x2="604.4" y2="523.6" stroke="#ff7f0e" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="264.4" y1="517.6" x2="264.4" y2="523.6" stroke="#8c564b" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="434.4" y1="517.6" x2="434.4" y2="523.6" stroke="#8c564b" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="604.4" y1="517.4" x2="604.4" y2="523.6" stroke="#8c564b" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="264.4" y1="517.6" x2="264.4" y2="523.6" stroke="#2ca02c" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="434.4" y1="517.6" x2="434.4" y2="523.6" stroke="#2ca02c" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="604.4" y1="517.4" x2="604.4" y2="523.6" stroke="#2ca02c" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="237.2" y1="503.0" x2="237.2" y2="539.3" stroke="#7f7f7f" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="407.2" y1="471.7" x2="407.2" y2="539.3" stroke="#7f7f7f" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="577.2" y1="502.8" x2="577.2" y2="539.3" stroke="#7f7f7f" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="210.0" y1="554.7" x2="210.0" y2="555.0" stroke="#e377c2" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="380.0" y1="555.0" x2="380.0" y2="555.0" stroke="#e377c2" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="550.0" y1="555.0" x2="550.0" y2="555.0" stroke="#e377c2" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="210.0" y1="554.7" x2="210.0" y2="555.0" stroke="#d62728" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="380.0" y1="555.0" x2="380.0" y2="555.0" stroke="#d62728" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
+  <line x1="550.0" y1="555.0" x2="550.0" y2="555.0" stroke="#d62728" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="210.0" y1="448.0" x2="210.0" y2="555.0" stroke="#17becf" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="380.0" y1="412.8" x2="380.0" y2="555.0" stroke="#17becf" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
   <line x1="550.0" y1="462.0" x2="550.0" y2="555.0" stroke="#17becf" stroke-width="0.9" stroke-dasharray="3,2" opacity="0.5"/>
-  <line x1="391.9" y1="140.0" x2="561.9" y2="143.4" stroke="#2ca02c" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="561.9" y1="143.4" x2="730.2" y2="164.2" stroke="#2ca02c" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="366.4" y1="286.2" x2="536.4" y2="268.4" stroke="#9467bd" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="536.4" y1="268.4" x2="708.1" y2="288.2" stroke="#9467bd" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="342.6" y1="299.5" x2="512.6" y2="284.9" stroke="#d62728" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="512.6" y1="284.9" x2="682.6" y2="304.5" stroke="#d62728" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="391.9" y1="140.0" x2="561.9" y2="143.4" stroke="#9467bd" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="561.9" y1="143.4" x2="730.2" y2="164.2" stroke="#9467bd" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="366.4" y1="286.2" x2="536.4" y2="268.4" stroke="#e377c2" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="536.4" y1="268.4" x2="708.1" y2="288.2" stroke="#e377c2" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="342.6" y1="299.5" x2="512.6" y2="284.9" stroke="#8c564b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="512.6" y1="284.9" x2="682.6" y2="304.5" stroke="#8c564b" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="291.6" y1="415.9" x2="461.6" y2="410.6" stroke="#bcbd22" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="461.6" y1="410.6" x2="631.6" y2="425.1" stroke="#bcbd22" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="264.4" y1="413.5" x2="434.4" y2="451.6" stroke="#1f77b4" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="434.4" y1="451.6" x2="604.4" y2="443.4" stroke="#1f77b4" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="264.4" y1="454.4" x2="434.4" y2="412.2" stroke="#ff7f0e" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="434.4" y1="412.2" x2="604.4" y2="436.3" stroke="#ff7f0e" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="264.4" y1="517.6" x2="434.4" y2="517.6" stroke="#8c564b" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="434.4" y1="517.6" x2="604.4" y2="517.4" stroke="#8c564b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="264.4" y1="517.6" x2="434.4" y2="517.6" stroke="#2ca02c" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="434.4" y1="517.6" x2="604.4" y2="517.4" stroke="#2ca02c" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="237.2" y1="503.0" x2="407.2" y2="471.7" stroke="#7f7f7f" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="407.2" y1="471.7" x2="577.2" y2="502.8" stroke="#7f7f7f" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="210.0" y1="554.7" x2="380.0" y2="555.0" stroke="#e377c2" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <line x1="380.0" y1="555.0" x2="550.0" y2="555.0" stroke="#e377c2" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="210.0" y1="554.7" x2="380.0" y2="555.0" stroke="#d62728" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <line x1="380.0" y1="555.0" x2="550.0" y2="555.0" stroke="#d62728" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="210.0" y1="448.0" x2="380.0" y2="412.8" stroke="#17becf" stroke-width="2.5" stroke-dasharray="8,4"/>
   <line x1="380.0" y1="412.8" x2="550.0" y2="462.0" stroke="#17becf" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <circle cx="391.9" cy="140.0" r="5" fill="#2ca02c" stroke="white" stroke-width="1.5"><title>GCacheARC P100 — 24.9K ns/op, 107 allocs/op</title></circle>
-  <text x="391.9" y="126.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">24.9K ns/op</text>
-  <text x="391.9" y="160.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">107 a/op</text>
-  <circle cx="561.9" cy="143.4" r="5" fill="#2ca02c" stroke="white" stroke-width="1.5"><title>GCacheARC P1000 — 24.6K ns/op, 107 allocs/op</title></circle>
-  <text x="561.9" y="129.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">24.6K ns/op</text>
-  <text x="561.9" y="163.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">107 a/op</text>
-  <circle cx="730.2" cy="164.2" r="5" fill="#2ca02c" stroke="white" stroke-width="1.5"><title>GCacheARC P10000 — 23.1K ns/op, 106 allocs/op</title></circle>
-  <text x="730.2" y="150.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">23.1K ns/op</text>
-  <text x="730.2" y="184.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">106 a/op</text>
-  <circle cx="366.4" cy="286.2" r="5" fill="#9467bd" stroke="white" stroke-width="1.5"><title>GCacheLRU P100 — 14.5K ns/op, 92 allocs/op</title></circle>
-  <text x="366.4" y="272.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">14.5K ns/op</text>
-  <text x="366.4" y="306.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">92 a/op</text>
-  <circle cx="536.4" cy="268.4" r="5" fill="#9467bd" stroke="white" stroke-width="1.5"><title>GCacheLRU P1000 — 15.9K ns/op, 92 allocs/op</title></circle>
-  <text x="536.4" y="254.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">15.9K ns/op</text>
-  <text x="536.4" y="288.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">92 a/op</text>
-  <circle cx="708.1" cy="288.2" r="5" fill="#9467bd" stroke="white" stroke-width="1.5"><title>GCacheLRU P10000 — 14.3K ns/op, 93 allocs/op</title></circle>
-  <text x="708.1" y="274.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">14.3K ns/op</text>
-  <text x="708.1" y="308.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">93 a/op</text>
-  <circle cx="342.6" cy="299.5" r="5" fill="#d62728" stroke="white" stroke-width="1.5"><title>GCacheLFU P100 — 14.5K ns/op, 78 allocs/op</title></circle>
-  <text x="342.6" y="285.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">14.5K ns/op</text>
-  <text x="342.6" y="319.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">78 a/op</text>
-  <circle cx="512.6" cy="284.9" r="5" fill="#d62728" stroke="white" stroke-width="1.5"><title>GCacheLFU P1000 — 15.7K ns/op, 78 allocs/op</title></circle>
-  <text x="512.6" y="270.9" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">15.7K ns/op</text>
-  <text x="512.6" y="304.9" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">78 a/op</text>
-  <circle cx="682.6" cy="304.5" r="5" fill="#d62728" stroke="white" stroke-width="1.5"><title>GCacheLFU P10000 — 14.1K ns/op, 78 allocs/op</title></circle>
-  <text x="682.6" y="290.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">14.1K ns/op</text>
-  <text x="682.6" y="324.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">78 a/op</text>
+  <circle cx="391.9" cy="140.0" r="5" fill="#9467bd" stroke="white" stroke-width="1.5"><title>GCacheARC P100 — 24.9K ns/op, 107 allocs/op</title></circle>
+  <text x="391.9" y="126.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">24.9K ns/op</text>
+  <text x="391.9" y="160.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">107 a/op</text>
+  <circle cx="561.9" cy="143.4" r="5" fill="#9467bd" stroke="white" stroke-width="1.5"><title>GCacheARC P1000 — 24.6K ns/op, 107 allocs/op</title></circle>
+  <text x="561.9" y="129.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">24.6K ns/op</text>
+  <text x="561.9" y="163.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">107 a/op</text>
+  <circle cx="730.2" cy="164.2" r="5" fill="#9467bd" stroke="white" stroke-width="1.5"><title>GCacheARC P10000 — 23.1K ns/op, 106 allocs/op</title></circle>
+  <text x="730.2" y="150.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">23.1K ns/op</text>
+  <text x="730.2" y="184.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9467bd" stroke="white" stroke-width="3" paint-order="stroke">106 a/op</text>
+  <circle cx="366.4" cy="286.2" r="5" fill="#e377c2" stroke="white" stroke-width="1.5"><title>GCacheLRU P100 — 14.5K ns/op, 92 allocs/op</title></circle>
+  <text x="366.4" y="272.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">14.5K ns/op</text>
+  <text x="366.4" y="306.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">92 a/op</text>
+  <circle cx="536.4" cy="268.4" r="5" fill="#e377c2" stroke="white" stroke-width="1.5"><title>GCacheLRU P1000 — 15.9K ns/op, 92 allocs/op</title></circle>
+  <text x="536.4" y="254.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">15.9K ns/op</text>
+  <text x="536.4" y="288.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">92 a/op</text>
+  <circle cx="708.1" cy="288.2" r="5" fill="#e377c2" stroke="white" stroke-width="1.5"><title>GCacheLRU P10000 — 14.3K ns/op, 93 allocs/op</title></circle>
+  <text x="708.1" y="274.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">14.3K ns/op</text>
+  <text x="708.1" y="308.2" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">93 a/op</text>
+  <circle cx="342.6" cy="299.5" r="5" fill="#8c564b" stroke="white" stroke-width="1.5"><title>GCacheLFU P100 — 14.5K ns/op, 78 allocs/op</title></circle>
+  <text x="342.6" y="285.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">14.5K ns/op</text>
+  <text x="342.6" y="319.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">78 a/op</text>
+  <circle cx="512.6" cy="284.9" r="5" fill="#8c564b" stroke="white" stroke-width="1.5"><title>GCacheLFU P1000 — 15.7K ns/op, 78 allocs/op</title></circle>
+  <text x="512.6" y="270.9" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">15.7K ns/op</text>
+  <text x="512.6" y="304.9" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">78 a/op</text>
+  <circle cx="682.6" cy="304.5" r="5" fill="#8c564b" stroke="white" stroke-width="1.5"><title>GCacheLFU P10000 — 14.1K ns/op, 78 allocs/op</title></circle>
+  <text x="682.6" y="290.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">14.1K ns/op</text>
+  <text x="682.6" y="324.5" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">78 a/op</text>
   <circle cx="291.6" cy="415.9" r="5" fill="#bcbd22" stroke="white" stroke-width="1.5"><title>SyncMap P100 — 7.6K ns/op, 48 allocs/op</title></circle>
   <text x="291.6" y="401.9" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#bcbd22" stroke="white" stroke-width="3" paint-order="stroke">7.6K ns/op</text>
   <text x="291.6" y="435.9" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#bcbd22" stroke="white" stroke-width="3" paint-order="stroke">48 a/op</text>
@@ -201,15 +201,15 @@
   <circle cx="604.4" cy="436.3" r="5" fill="#ff7f0e" stroke="white" stroke-width="1.5"><title>DefaultMap P10000 — 7.3K ns/op, 32 allocs/op</title></circle>
   <text x="604.4" y="422.3" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#ff7f0e" stroke="white" stroke-width="3" paint-order="stroke">7.3K ns/op</text>
   <text x="604.4" y="456.3" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#ff7f0e" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
-  <circle cx="264.4" cy="517.6" r="5" fill="#8c564b" stroke="white" stroke-width="1.5"><title>Gache P100 — 827 ns/op, 32 allocs/op</title></circle>
-  <text x="264.4" y="503.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">827 ns/op</text>
-  <text x="264.4" y="537.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
-  <circle cx="434.4" cy="517.6" r="5" fill="#8c564b" stroke="white" stroke-width="1.5"><title>Gache P1000 — 831 ns/op, 32 allocs/op</title></circle>
-  <text x="434.4" y="503.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">831 ns/op</text>
-  <text x="434.4" y="537.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
-  <circle cx="604.4" cy="517.4" r="5" fill="#8c564b" stroke="white" stroke-width="1.5"><title>Gache P10000 — 850 ns/op, 32 allocs/op</title></circle>
-  <text x="604.4" y="503.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">850 ns/op</text>
-  <text x="604.4" y="537.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#8c564b" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
+  <circle cx="264.4" cy="517.6" r="5" fill="#2ca02c" stroke="white" stroke-width="1.5"><title>Gache P100 — 827 ns/op, 32 allocs/op</title></circle>
+  <text x="264.4" y="503.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">827 ns/op</text>
+  <text x="264.4" y="537.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
+  <circle cx="434.4" cy="517.6" r="5" fill="#2ca02c" stroke="white" stroke-width="1.5"><title>Gache P1000 — 831 ns/op, 32 allocs/op</title></circle>
+  <text x="434.4" y="503.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">831 ns/op</text>
+  <text x="434.4" y="537.6" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
+  <circle cx="604.4" cy="517.4" r="5" fill="#2ca02c" stroke="white" stroke-width="1.5"><title>Gache P10000 — 850 ns/op, 32 allocs/op</title></circle>
+  <text x="604.4" y="503.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">850 ns/op</text>
+  <text x="604.4" y="537.4" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#2ca02c" stroke="white" stroke-width="3" paint-order="stroke">32 a/op</text>
   <circle cx="237.2" cy="503.0" r="5" fill="#7f7f7f" stroke="white" stroke-width="1.5"><title>GoCache P100 — 3.2K ns/op, 16 allocs/op</title></circle>
   <text x="237.2" y="489.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#7f7f7f" stroke="white" stroke-width="3" paint-order="stroke">3.2K ns/op</text>
   <text x="237.2" y="523.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#7f7f7f" stroke="white" stroke-width="3" paint-order="stroke">16 a/op</text>
@@ -219,15 +219,15 @@
   <circle cx="577.2" cy="502.8" r="5" fill="#7f7f7f" stroke="white" stroke-width="1.5"><title>GoCache P10000 — 3.2K ns/op, 16 allocs/op</title></circle>
   <text x="577.2" y="488.8" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#7f7f7f" stroke="white" stroke-width="3" paint-order="stroke">3.2K ns/op</text>
   <text x="577.2" y="522.8" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#7f7f7f" stroke="white" stroke-width="3" paint-order="stroke">16 a/op</text>
-  <circle cx="210.0" cy="554.7" r="5" fill="#e377c2" stroke="white" stroke-width="1.5"><title>GacheV2 P100 — 378 ns/op, 0.0 allocs/op</title></circle>
-  <text x="210.0" y="540.7" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">378 ns/op</text>
-  <text x="210.0" y="574.7" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
-  <circle cx="380.0" cy="555.0" r="5" fill="#e377c2" stroke="white" stroke-width="1.5"><title>GacheV2 P1000 — 356 ns/op, 0.0 allocs/op</title></circle>
-  <text x="380.0" y="541.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">356 ns/op</text>
-  <text x="380.0" y="575.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
-  <circle cx="550.0" cy="555.0" r="5" fill="#e377c2" stroke="white" stroke-width="1.5"><title>GacheV2 P10000 — 356 ns/op, 0.0 allocs/op</title></circle>
-  <text x="550.0" y="541.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">356 ns/op</text>
-  <text x="550.0" y="575.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#e377c2" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
+  <circle cx="210.0" cy="554.7" r="5" fill="#d62728" stroke="white" stroke-width="1.5"><title>GacheV2 P100 — 378 ns/op, 0.0 allocs/op</title></circle>
+  <text x="210.0" y="540.7" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">378 ns/op</text>
+  <text x="210.0" y="574.7" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
+  <circle cx="380.0" cy="555.0" r="5" fill="#d62728" stroke="white" stroke-width="1.5"><title>GacheV2 P1000 — 356 ns/op, 0.0 allocs/op</title></circle>
+  <text x="380.0" y="541.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">356 ns/op</text>
+  <text x="380.0" y="575.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
+  <circle cx="550.0" cy="555.0" r="5" fill="#d62728" stroke="white" stroke-width="1.5"><title>GacheV2 P10000 — 356 ns/op, 0.0 allocs/op</title></circle>
+  <text x="550.0" y="541.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">356 ns/op</text>
+  <text x="550.0" y="575.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#d62728" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
   <circle cx="210.0" cy="448.0" r="5" fill="#17becf" stroke="white" stroke-width="1.5"><title>TTLCache P100 — 8.8K ns/op, 0.0 allocs/op</title></circle>
   <text x="210.0" y="434.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#17becf" stroke="white" stroke-width="3" paint-order="stroke">8.8K ns/op</text>
   <text x="210.0" y="468.0" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#17becf" stroke="white" stroke-width="3" paint-order="stroke">0.0 a/op</text>
@@ -251,20 +251,20 @@
   <line x1="751" y1="178" x2="769" y2="178" stroke="#ff7f0e" stroke-width="2.5" stroke-dasharray="8,4"/>
   <circle cx="760" cy="178" r="4" fill="#ff7f0e"/>
   <text x="775" y="178" font-family="sans-serif" font-size="12" dominant-baseline="middle">DefaultMap</text>
-  <line x1="751" y1="200" x2="769" y2="200" stroke="#2ca02c" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <circle cx="760" cy="200" r="4" fill="#2ca02c"/>
+  <line x1="751" y1="200" x2="769" y2="200" stroke="#9467bd" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <circle cx="760" cy="200" r="4" fill="#9467bd"/>
   <text x="775" y="200" font-family="sans-serif" font-size="12" dominant-baseline="middle">GCacheARC</text>
-  <line x1="751" y1="222" x2="769" y2="222" stroke="#d62728" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <circle cx="760" cy="222" r="4" fill="#d62728"/>
+  <line x1="751" y1="222" x2="769" y2="222" stroke="#8c564b" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <circle cx="760" cy="222" r="4" fill="#8c564b"/>
   <text x="775" y="222" font-family="sans-serif" font-size="12" dominant-baseline="middle">GCacheLFU</text>
-  <line x1="751" y1="244" x2="769" y2="244" stroke="#9467bd" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <circle cx="760" cy="244" r="4" fill="#9467bd"/>
+  <line x1="751" y1="244" x2="769" y2="244" stroke="#e377c2" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <circle cx="760" cy="244" r="4" fill="#e377c2"/>
   <text x="775" y="244" font-family="sans-serif" font-size="12" dominant-baseline="middle">GCacheLRU</text>
-  <line x1="751" y1="266" x2="769" y2="266" stroke="#8c564b" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <circle cx="760" cy="266" r="4" fill="#8c564b"/>
+  <line x1="751" y1="266" x2="769" y2="266" stroke="#2ca02c" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <circle cx="760" cy="266" r="4" fill="#2ca02c"/>
   <text x="775" y="266" font-family="sans-serif" font-size="12" dominant-baseline="middle">Gache</text>
-  <line x1="751" y1="288" x2="769" y2="288" stroke="#e377c2" stroke-width="2.5" stroke-dasharray="8,4"/>
-  <circle cx="760" cy="288" r="4" fill="#e377c2"/>
+  <line x1="751" y1="288" x2="769" y2="288" stroke="#d62728" stroke-width="2.5" stroke-dasharray="8,4"/>
+  <circle cx="760" cy="288" r="4" fill="#d62728"/>
   <text x="775" y="288" font-family="sans-serif" font-size="12" dominant-baseline="middle">GacheV2</text>
   <line x1="751" y1="310" x2="769" y2="310" stroke="#7f7f7f" stroke-width="2.5" stroke-dasharray="8,4"/>
   <circle cx="760" cy="310" r="4" fill="#7f7f7f"/>
