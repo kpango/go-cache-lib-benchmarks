@@ -1,5 +1,20 @@
 name: Deploy to GitHub Pages
 
+# Deploys interactive 3D HTML charts to GitHub Pages.
+#
+# Custom domain: kpango.com (proxied via Cloudflare)
+#
+# Required Cloudflare DNS configuration:
+#   Type: CNAME
+#   Name: kpango.com  (or @ for root)
+#   Target: kpango.github.io
+#   Proxy status: Proxied (orange cloud)
+#   SSL/TLS mode: Full
+#
+# Required GitHub Pages settings (repo → Settings → Pages):
+#   Source: GitHub Actions
+#   Custom domain: kpango.com
+
 on:
   push:
     branches: [main]

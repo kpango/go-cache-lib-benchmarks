@@ -598,7 +598,8 @@ const chartSectionMarkerStart = "<!-- benchmark-chart-section-start -->"
 const chartSectionMarkerEnd = "<!-- benchmark-chart-section-end -->"
 
 // htmlPreviewBaseURL is the GitHub Pages base URL used to serve interactive HTML charts.
-const htmlPreviewBaseURL = "https://kpango.github.io/go-cache-lib-benchmarks/"
+// The custom domain kpango.com is served via Cloudflare and proxies to kpango.github.io.
+const htmlPreviewBaseURL = "https://kpango.com/go-cache-lib-benchmarks/"
 
 // updateREADME inserts (or replaces) an auto-generated chart section at the end
 // of the README.md file.  The section embeds all generated SVG charts and adds
