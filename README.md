@@ -247,3 +247,33 @@ BenchmarkGCacheARCGetBigDataNoTTL/P10000-128              	      24	  46870338 n
 PASS
 ok  	github.com/kpango/go-cache-lib-benchmarks	1449.621s
 ```
+
+<!-- benchmark-chart-section-start -->
+
+## Benchmark Charts
+
+### BigData NoTTL
+
+![BigData NoTTL](images/BigData_NoTTL_3d_chart.svg)
+
+[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/BigData_NoTTL_3d_chart.html)
+
+### BigData WithTTL
+
+![BigData WithTTL](images/BigData_WithTTL_3d_chart.svg)
+
+[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/BigData_WithTTL_3d_chart.html)
+
+### SmallData NoTTL
+
+![SmallData NoTTL](images/SmallData_NoTTL_3d_chart.svg)
+
+[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/SmallData_NoTTL_3d_chart.html)
+
+### SmallData WithTTL
+
+![SmallData WithTTL](images/SmallData_WithTTL_3d_chart.svg)
+
+[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/SmallData_WithTTL_3d_chart.html)
+
+<!-- benchmark-chart-section-end -->

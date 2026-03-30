@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"sort"
 	"strconv"
+	"strings"
 
 	"github.com/go-echarts/go-echarts/v2/charts"
 	"github.com/go-echarts/go-echarts/v2/opts"
@@ -32,10 +33,35 @@ type GroupKey struct {
 	TTL         string
 }
 
-// colorPalette holds full hex colors used for series/libraries.
+// colorPalette holds full hex colors used as fallback for unknown libraries.
 var colorPalette = []string{
 	"#1f77b4", "#ff7f0e", "#2ca02c", "#d62728", "#9467bd",
 	"#8c564b", "#e377c2", "#7f7f7f", "#bcbd22", "#17becf",
+}
+
+// libColorMap assigns a fixed color to each known library so that every chart
+// uses the same color for the same library, regardless of which subset of
+// libraries appears in a given chart group.
+var libColorMap = map[string]string{
+	"BigCache":   "#1f77b4", // Blue
+	"DefaultMap": "#ff7f0e", // Orange
+	"Gache":      "#2ca02c", // Green
+	"GacheV2":    "#d62728", // Red
+	"GCacheARC":  "#9467bd", // Purple
+	"GCacheLFU":  "#8c564b", // Brown
+	"GCacheLRU":  "#e377c2", // Pink
+	"GoCache":    "#7f7f7f", // Gray
+	"SyncMap":    "#bcbd22", // Yellow-green
+	"TTLCache":   "#17becf", // Cyan
+}
+
+// libColor returns the fixed color for a library name.  If the library is not
+// in the static map it falls back to the palette (cycled by index).
+func libColor(name string, index int) string {
+	if c, ok := libColorMap[name]; ok {
+		return c
+	}
+	return colorPalette[index%len(colorPalette)]
 }
 
 func main() {
@@ -89,13 +115,18 @@ func main() {
 		return
 	}
 
+	var groupKeys []GroupKey
 	for key, group := range grouped {
+		groupKeys = append(groupKeys, key)
 		// Interactive HTML 3D chart (go-echarts / ECharts GL).
 		generateTrue3DChart(key, group)
 		// Static SVG 3D chart (oblique projection) — for README embedding.
 		generate3DSVGChart(key, group)
 	}
 	fmt.Println("Charts generated successfully.")
+
+	// Update README.md with embedded chart images.
+	updateREADME(*fileName, groupKeys)
 }
 
 // sortedLibs returns a deterministically sorted list of unique library names.
@@ -177,7 +208,7 @@ func generateTrue3DChart(key GroupKey, results []BenchmarkResult) {
 	)
 
 	for i, lib := range libs {
-		color := colorPalette[i%len(colorPalette)]
+		color := libColor(lib, i)
 		var data3d []opts.Chart3DData
 		for j, p := range processCounts {
 			for _, r := range results {
@@ -461,7 +492,7 @@ func generate3DSVGChart(key GroupKey, results []BenchmarkResult) {
 
 	var entries []libEntry
 	for i, lib := range libs {
-		colorHex := colorPalette[i%len(colorPalette)]
+		colorHex := libColor(lib, i)
 		var e libEntry
 		e.name = lib
 		e.color = colorHex
@@ -557,4 +588,70 @@ func generate3DSVGChart(key GroupKey, results []BenchmarkResult) {
 
 	wr(`</svg>`)
 	fmt.Printf("Generated: %s\n", outPath)
+}
+
+// chartSectionMarkerStart is the marker that delimits the auto-generated chart
+// section in README.md.
+const chartSectionMarkerStart = "<!-- benchmark-chart-section-start -->"
+
+// chartSectionMarkerEnd is the closing marker for the auto-generated section.
+const chartSectionMarkerEnd = "<!-- benchmark-chart-section-end -->"
+
+// htmlPreviewBaseURL is the GitHub Pages base URL used to serve interactive HTML charts.
+// The custom domain kpango.com is served via Cloudflare and proxies to kpango.github.io.
+const htmlPreviewBaseURL = "https://kpango.com/go-cache-lib-benchmarks/"
+
+// updateREADME inserts (or replaces) an auto-generated chart section at the end
+// of the README.md file.  The section embeds all generated SVG charts and adds
+// preview links to the interactive HTML versions.
+func updateREADME(readmePath string, keys []GroupKey) {
+	// Sort keys for deterministic order: BigData before SmallData, NoTTL before WithTTL.
+	sort.Slice(keys, func(i, j int) bool {
+		if keys[i].DataPattern != keys[j].DataPattern {
+			return keys[i].DataPattern < keys[j].DataPattern
+		}
+		return keys[i].TTL < keys[j].TTL
+	})
+
+	data, err := os.ReadFile(readmePath)
+	if err != nil {
+		fmt.Printf("Error reading README for update: %v\n", err)
+		return
+	}
+	content := string(data)
+
+	// Build the new chart section.
+	var sb strings.Builder
+	sb.WriteString(chartSectionMarkerStart + "\n")
+	sb.WriteString("\n## Benchmark Charts\n\n")
+	for _, key := range keys {
+		svgFile := fmt.Sprintf("images/%s_%s_3d_chart.svg", key.DataPattern, key.TTL)
+		htmlFile := fmt.Sprintf("%s_%s_3d_chart.html", key.DataPattern, key.TTL)
+		title := fmt.Sprintf("%s %s", key.DataPattern, key.TTL)
+		sb.WriteString(fmt.Sprintf("### %s\n\n", title))
+		sb.WriteString(fmt.Sprintf("![%s](%s)\n\n", title, svgFile))
+		sb.WriteString(fmt.Sprintf("[📊 View Interactive 3D Chart](%s%s)\n\n", htmlPreviewBaseURL, htmlFile))
+	}
+	sb.WriteString(chartSectionMarkerEnd + "\n")
+
+	newSection := sb.String()
+
+	// Replace existing section or append.
+	startIdx := strings.Index(content, chartSectionMarkerStart)
+	endIdx := strings.Index(content, chartSectionMarkerEnd)
+	if startIdx >= 0 && endIdx >= 0 {
+		tailStart := endIdx + len(chartSectionMarkerEnd)
+		if tailStart < len(content) && content[tailStart] == '\n' {
+			tailStart++
+		}
+		content = content[:startIdx] + newSection + content[tailStart:]
+	} else {
+		content = strings.TrimRight(content, "\n") + "\n\n" + newSection
+	}
+
+	if err := os.WriteFile(readmePath, []byte(content), 0644); err != nil {
+		fmt.Printf("Error writing README: %v\n", err)
+		return
+	}
+	fmt.Printf("Updated: %s\n", readmePath)
 }
