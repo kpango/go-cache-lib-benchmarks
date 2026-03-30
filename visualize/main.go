@@ -125,6 +125,9 @@ func main() {
 	}
 	fmt.Println("Charts generated successfully.")
 
+	// Generate index.html that links to all interactive HTML charts.
+	generateIndexHTML(groupKeys)
+
 	// Update README.md with embedded chart images.
 	updateREADME(*fileName, groupKeys)
 }
@@ -587,6 +590,70 @@ func generate3DSVGChart(key GroupKey, results []BenchmarkResult) {
 	}
 
 	wr(`</svg>`)
+	fmt.Printf("Generated: %s\n", outPath)
+}
+
+// generateIndexHTML creates an index.html in the images directory that serves as
+// a landing page linking to all interactive 3D benchmark charts.  The file is
+// regenerated every time `make update-graph` is run so that it stays in sync
+// with the set of generated HTML charts.
+func generateIndexHTML(keys []GroupKey) {
+	sort.Slice(keys, func(i, j int) bool {
+		if keys[i].DataPattern != keys[j].DataPattern {
+			return keys[i].DataPattern < keys[j].DataPattern
+		}
+		return keys[i].TTL < keys[j].TTL
+	})
+
+	var sb strings.Builder
+	sb.WriteString(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Cache Library Benchmarks</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background: #f5f5f5; color: #333; }
+        header { background: #24292e; color: #fff; padding: 20px 0; text-align: center; }
+        header h1 { font-size: 1.6em; }
+        header p { margin-top: 6px; color: #959da5; font-size: 0.95em; }
+        .charts { max-width: 1100px; margin: 30px auto; padding: 0 16px; }
+        .chart-card { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); margin-bottom: 28px; overflow: hidden; }
+        .chart-card h2 { font-size: 1.15em; padding: 14px 20px; border-bottom: 1px solid #eaecef; }
+        .chart-card iframe { width: 100%; height: 720px; border: none; }
+        footer { text-align: center; padding: 20px; color: #586069; font-size: 0.85em; }
+        footer a { color: #0366d6; text-decoration: none; }
+        footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<header>
+    <h1>Go Cache Library Benchmarks</h1>
+    <p>Interactive 3D charts comparing cache library performance</p>
+</header>
+<div class="charts">
+`)
+
+	for _, key := range keys {
+		htmlFile := fmt.Sprintf("%s_%s_3d_chart.html", key.DataPattern, key.TTL)
+		title := fmt.Sprintf("%s %s", key.DataPattern, key.TTL)
+		sb.WriteString(fmt.Sprintf("    <div class=\"chart-card\">\n        <h2>%s</h2>\n        <iframe src=\"%s\" loading=\"lazy\"></iframe>\n    </div>\n", title, htmlFile))
+	}
+
+	sb.WriteString(`</div>
+<footer>
+    <p>Source: <a href="https://github.com/kpango/go-cache-lib-benchmarks">kpango/go-cache-lib-benchmarks</a></p>
+</footer>
+</body>
+</html>
+`)
+
+	outPath := filepath.Join("../images", "index.html")
+	if err := os.WriteFile(outPath, []byte(sb.String()), 0644); err != nil {
+		fmt.Printf("Error creating index.html: %v\n", err)
+		return
+	}
 	fmt.Printf("Generated: %s\n", outPath)
 }
 
