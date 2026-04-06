@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"flag"
+	"hash/fnv"
 	"fmt"
 	"math"
 	"os"
@@ -55,17 +56,21 @@ var libColorMap = map[string]string{
 	"TTLCache":   "#17becf", // Cyan
 }
 
-// libColor returns the fixed color for a library name.  If the library is not
-// in the static map it falls back to the palette (cycled by index).
-func libColor(name string, index int) string {
+// libColor returns the fixed color for a library name. Libraries missing from
+// the static map get a palette color derived from a hash of the name, so the
+// color is the same in every chart regardless of which libraries share it.
+func libColor(name string) string {
 	if c, ok := libColorMap[name]; ok {
 		return c
 	}
-	return colorPalette[index%len(colorPalette)]
+	h := fnv.New32a()
+	h.Write([]byte(name))
+	return colorPalette[int(h.Sum32())%len(colorPalette)]
 }
 
 func main() {
 	fileName := flag.String("f", "../README.md", "Filename to read benchmark results from")
+	readmeName := flag.String("readme", "../README.md", "README to update with chart section (empty to skip)")
 	flag.Parse()
 
 	file, err := os.Open(*fileName)
@@ -122,6 +127,8 @@ func main() {
 		generateTrue3DChart(key, group)
 		// Static SVG 3D chart (oblique projection) — for README embedding.
 		generate3DSVGChart(key, group)
+		// Log-scale ranking chart — keeps order-of-magnitude gaps readable.
+		generateRankingSVGChart(key, group)
 	}
 	fmt.Println("Charts generated successfully.")
 
@@ -129,7 +136,9 @@ func main() {
 	generateIndexHTML(groupKeys)
 
 	// Update README.md with embedded chart images.
-	updateREADME(*fileName, groupKeys)
+	if *readmeName != "" {
+		updateREADME(*readmeName, groupKeys)
+	}
 }
 
 // sortedLibs returns a deterministically sorted list of unique library names.
@@ -179,8 +188,16 @@ func generateTrue3DChart(key GroupKey, results []BenchmarkResult) {
 		xLabels[i] = fmt.Sprintf("P%d", p)
 	}
 
+	// ECharts picks series colors from this palette by series index, so it must
+	// follow the same order as the series added below (sorted libs).
+	palette := make(opts.Colors, len(libs))
+	for i, lib := range libs {
+		palette[i] = libColor(lib)
+	}
+
 	line3d := charts.NewLine3D()
 	line3d.SetGlobalOptions(
+		charts.WithColorsOpts(palette),
 		charts.WithInitializationOpts(opts.Initialization{Width: "980px", Height: "700px"}),
 		charts.WithTitleOpts(opts.Title{
 			Title: fmt.Sprintf("%s %s — ProcessCount × Latency/Op × Alloc/Op", key.DataPattern, key.TTL),
@@ -210,8 +227,8 @@ func generateTrue3DChart(key GroupKey, results []BenchmarkResult) {
 		charts.WithTooltipOpts(opts.Tooltip{Show: opts.Bool(true)}),
 	)
 
-	for i, lib := range libs {
-		color := libColor(lib, i)
+	for _, lib := range libs {
+		color := libColor(lib)
 		var data3d []opts.Chart3DData
 		for j, p := range processCounts {
 			for _, r := range results {
@@ -229,6 +246,7 @@ func generateTrue3DChart(key GroupKey, results []BenchmarkResult) {
 		}
 		line3d.AddSeries(lib, data3d,
 			charts.WithItemStyleOpts(opts.ItemStyle{Color: color}),
+			charts.WithLineStyleOpts(opts.LineStyle{Color: color}),
 		)
 	}
 
@@ -494,8 +512,8 @@ func generate3DSVGChart(key GroupKey, results []BenchmarkResult) {
 	}
 
 	var entries []libEntry
-	for i, lib := range libs {
-		colorHex := libColor(lib, i)
+	for _, lib := range libs {
+		colorHex := libColor(lib)
 		var e libEntry
 		e.name = lib
 		e.color = colorHex
@@ -621,6 +639,7 @@ func generateIndexHTML(keys []GroupKey) {
         .charts { max-width: 1100px; margin: 30px auto; padding: 0 16px; }
         .chart-card { background: #fff; border-radius: 8px; box-shadow: 0 1px 3px rgba(0,0,0,0.12); margin-bottom: 28px; overflow: hidden; }
         .chart-card h2 { font-size: 1.15em; padding: 14px 20px; border-bottom: 1px solid #eaecef; }
+        .chart-card img { display: block; width: 100%; height: auto; border-bottom: 1px solid #eaecef; }
         .chart-card iframe { width: 100%; height: 720px; border: none; }
         footer { text-align: center; padding: 20px; color: #586069; font-size: 0.85em; }
         footer a { color: #0366d6; text-decoration: none; }
@@ -638,7 +657,7 @@ func generateIndexHTML(keys []GroupKey) {
 	for _, key := range keys {
 		htmlFile := fmt.Sprintf("%s_%s_3d_chart.html", key.DataPattern, key.TTL)
 		title := fmt.Sprintf("%s %s", key.DataPattern, key.TTL)
-		sb.WriteString(fmt.Sprintf("    <div class=\"chart-card\">\n        <h2>%s</h2>\n        <iframe src=\"%s\" loading=\"lazy\"></iframe>\n    </div>\n", title, htmlFile))
+		sb.WriteString(fmt.Sprintf("    <div class=\"chart-card\">\n        <h2>%s</h2>\n        <img src=\"%s\" alt=\"%s ranking\">\n        <iframe src=\"%s\" loading=\"lazy\"></iframe>\n    </div>\n", title, rankingChartFile(key), title, htmlFile))
 	}
 
 	sb.WriteString(`</div>
@@ -665,8 +684,8 @@ const chartSectionMarkerStart = "<!-- benchmark-chart-section-start -->"
 const chartSectionMarkerEnd = "<!-- benchmark-chart-section-end -->"
 
 // htmlPreviewBaseURL is the GitHub Pages base URL used to serve interactive HTML charts.
-// The custom domain kpango.com is served via Cloudflare and proxies to kpango.github.io.
-const htmlPreviewBaseURL = "https://kpango.com/go-cache-lib-benchmarks/"
+// Served on the custom domain gache.kpango.com (see CNAME).
+const htmlPreviewBaseURL = "https://gache.kpango.com/"
 
 // updateREADME inserts (or replaces) an auto-generated chart section at the end
 // of the README.md file.  The section embeds all generated SVG charts and adds
@@ -697,6 +716,7 @@ func updateREADME(readmePath string, keys []GroupKey) {
 		title := fmt.Sprintf("%s %s", key.DataPattern, key.TTL)
 		sb.WriteString(fmt.Sprintf("### %s\n\n", title))
 		sb.WriteString(fmt.Sprintf("![%s](%s)\n\n", title, svgFile))
+		sb.WriteString(fmt.Sprintf("![%s ranking](images/%s)\n\n", title, rankingChartFile(key)))
 		sb.WriteString(fmt.Sprintf("[📊 View Interactive 3D Chart](%s%s)\n\n", htmlPreviewBaseURL, htmlFile))
 	}
 	sb.WriteString(chartSectionMarkerEnd + "\n")

@@ -16,3 +16,6 @@
 
 # Go module cache and GOPATH artifacts
 root/
+
+# benchmark output
+bench.log

@@ -19,7 +19,8 @@ on:
   push:
     branches: [main]
     paths:
-      - "images/*.html"
+      - "images/**"
+  workflow_dispatch:
 
 permissions:
   contents: read
@@ -43,4 +44,4 @@ jobs:
         with:
           path: images
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

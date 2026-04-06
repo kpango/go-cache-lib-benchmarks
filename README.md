@@ -256,24 +256,32 @@ ok  	github.com/kpango/go-cache-lib-benchmarks	1449.621s
 
 ![BigData NoTTL](images/BigData_NoTTL_3d_chart.svg)
 
-[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/BigData_NoTTL_3d_chart.html)
+![BigData NoTTL ranking](images/BigData_NoTTL_ranking.svg)
+
+[📊 View Interactive 3D Chart](https://gache.kpango.com/BigData_NoTTL_3d_chart.html)
 
 ### BigData WithTTL
 
 ![BigData WithTTL](images/BigData_WithTTL_3d_chart.svg)
 
-[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/BigData_WithTTL_3d_chart.html)
+![BigData WithTTL ranking](images/BigData_WithTTL_ranking.svg)
+
+[📊 View Interactive 3D Chart](https://gache.kpango.com/BigData_WithTTL_3d_chart.html)
 
 ### SmallData NoTTL
 
 ![SmallData NoTTL](images/SmallData_NoTTL_3d_chart.svg)
 
-[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/SmallData_NoTTL_3d_chart.html)
+![SmallData NoTTL ranking](images/SmallData_NoTTL_ranking.svg)
+
+[📊 View Interactive 3D Chart](https://gache.kpango.com/SmallData_NoTTL_3d_chart.html)
 
 ### SmallData WithTTL
 
 ![SmallData WithTTL](images/SmallData_WithTTL_3d_chart.svg)
 
-[📊 View Interactive 3D Chart](https://kpango.com/go-cache-lib-benchmarks/SmallData_WithTTL_3d_chart.html)
+![SmallData WithTTL ranking](images/SmallData_WithTTL_ranking.svg)
+
+[📊 View Interactive 3D Chart](https://gache.kpango.com/SmallData_WithTTL_3d_chart.html)
 
 <!-- benchmark-chart-section-end -->

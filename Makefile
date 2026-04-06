@@ -1,4 +1,4 @@
-GO_VERSION :="1.26.1"
+GO_VERSION :="1.27.3"
 GOPATH := $(eval GOPATH := $(shell go env GOPATH))$(GOPATH)
 GOLINES_MAX_WIDTH     ?= 200
 
@@ -34,13 +34,36 @@ deps: \
 	GOTOOLCHAIN=go$(GO_VERSION) go get -u all 2>/dev/null || true
 	GOTOOLCHAIN=go$(GO_VERSION) go get -u ./... 2>/dev/null || true
 
-bench: deps
-	sleep 3
-	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem
+BENCH_LOG ?= $(ROOTDIR)/bench.log
 
-bench-custom: deps
+# bench-run runs the benchmarks, tees the output to $(BENCH_LOG) and prints a
+# list of failed benchmarks. A failing library is reported as FAILED instead of
+# aborting the run, so this target does not exit non-zero for them.
+.PHONY: bench-run
+bench-run:
 	sleep 3
-	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem -benchparallelism="$(BENCH_PARALLELISM)"
+	go test -count=1 -timeout=30m -run=NONE -bench . -benchmem $(BENCH_ARGS) 2>&1 | tee $(BENCH_LOG)
+	@echo ""
+	@if grep -qE '^[[:space:]]*--- FAIL' $(BENCH_LOG); then \
+	    echo "FAILED benchmarks:"; \
+	    grep -E '^[[:space:]]*--- FAIL' $(BENCH_LOG) | sed -E 's/^[[:space:]]*--- FAIL: /  FAILED  /; s/ \([0-9.]+s\)$$//' | sort -u; \
+	else \
+	    echo "All benchmarks passed."; \
+	fi
+
+.PHONY: bench
+bench: deps
+	$(MAKE) bench-run
+
+.PHONY: bench-custom
+bench-custom: deps
+	$(MAKE) bench-run BENCH_ARGS='-benchparallelism="$(BENCH_PARALLELISM)"'
+
+.PHONY: visualize
+## generate charts (images/*.svg|html, README charts) from $(BENCH_LOG)
+visualize:
+	@test -f $(BENCH_LOG) || { echo "$(BENCH_LOG) not found: run 'make bench' first"; exit 1; }
+	cd $(ROOTDIR)/visualize && go run . -f $(BENCH_LOG)
 
 init:
 	GO111MODULE=on go mod init github.com/kpango/go-cache-lib-benchmarks
@@ -48,7 +71,7 @@ init:
 	go get -u ./...
 
 update-graph:
-	cd $(ROOTDIR)/visualize && go run main.go -f ../README.md
+	cd $(ROOTDIR)/visualize && go run . -f ../README.md
 
 format:
 	find ./ -type d -name .git -prune -o -type f -regex '.*[^\.pb]\.go' -print | xargs $(GOPATH)/bin/golines -w -m $(GOLINES_MAX_WIDTH)

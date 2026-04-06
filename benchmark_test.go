@@ -140,6 +140,32 @@ func randStr(n int) string {
 	return string(b)
 }
 
+// newBigCache fails the benchmark (instead of leaving a nil cache that panics
+// later) when BigCache rejects the config. BigCache requires LifeWindow >= 1s
+// whenever CleanWindow is set, so the cleaner is disabled for sub-second TTLs.
+func newBigCache(b *testing.B, life time.Duration) *bigcache.BigCache {
+	b.Helper()
+	cfg := bigcache.DefaultConfig(life)
+	cfg.Verbose = false
+	if life < time.Second {
+		cfg.CleanWindow = 0
+	}
+	bc, err := bigcache.New(b.Context(), cfg)
+	if err != nil {
+		b.Fatalf("FAILED: bigcache.New: %v", err)
+	}
+	return bc
+}
+
+// failOnPanic turns a panic inside a benchmark into a reported failure so one
+// broken library does not abort the whole run. once limits the report to one
+// message per benchmark even when many parallel goroutines panic.
+func failOnPanic(b *testing.B, once *sync.Once) {
+	if r := recover(); r != nil {
+		once.Do(func() { b.Errorf("FAILED: panic: %v", r) })
+	}
+}
+
 func benchmark(b *testing.B, data []keyValue,
 	t time.Duration,
 	set func(string, string, time.Duration),
@@ -168,7 +194,9 @@ func runBenchParallel(b *testing.B, f func(pb *testing.PB, i int)) {
 	runtime.GC()
 	b.ReportAllocs()
 	b.ResetTimer()
+	var once sync.Once
 	b.RunParallel(func(pb *testing.PB) {
+		defer failOnPanic(b, &once)
 		var i int
 		for pb.Next() {
 			f(pb, i)
@@ -190,7 +218,9 @@ func benchmarkSetOnly(b *testing.B, data []keyValue,
 			b.ReportAllocs()
 			runtime.GC()
 			b.ResetTimer()
+			var once sync.Once
 			b.RunParallel(func(pb *testing.PB) {
+				defer failOnPanic(b, &once)
 				for pb.Next() {
 					for _, kv := range data {
 						set(kv.key, kv.value, t)
@@ -210,8 +240,15 @@ func benchmarkGetOnly(b *testing.B, data []keyValue,
 	get func(string),
 ) {
 	b.Helper()
-	for _, kv := range data {
-		setup(kv.key, kv.value, t)
+	var setupOnce sync.Once
+	func() {
+		defer failOnPanic(b, &setupOnce)
+		for _, kv := range data {
+			setup(kv.key, kv.value, t)
+		}
+	}()
+	if b.Failed() {
+		return
 	}
 	for _, p := range parallelismValues {
 		b.Run(fmt.Sprintf("P%d", p), func(b *testing.B) {
@@ -219,7 +256,9 @@ func benchmarkGetOnly(b *testing.B, data []keyValue,
 			b.ReportAllocs()
 			runtime.GC()
 			b.ResetTimer()
+			var once sync.Once
 			b.RunParallel(func(pb *testing.PB) {
+				defer failOnPanic(b, &once)
 				for pb.Next() {
 					for _, kv := range data {
 						get(kv.key)
@@ -379,36 +418,28 @@ func BenchmarkGoCacheSetGetBigDataWithTTL(b *testing.B) {
 }
 
 func BenchmarkBigCacheSetGetSmallDataNoTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, bigCacheNoTTL)
 	benchmark(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
 
 func BenchmarkBigCacheSetGetSmallDataWithTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(ttl)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, ttl)
 	benchmark(b, smallData, ttl,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
 
 func BenchmarkBigCacheSetGetBigDataNoTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, bigCacheNoTTL)
 	benchmark(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
 
 func BenchmarkBigCacheSetGetBigDataWithTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(ttl)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, ttl)
 	benchmark(b, bigData, ttl,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
@@ -622,17 +653,13 @@ func BenchmarkGoCacheSetOnlyBigDataNoTTL(b *testing.B) {
 }
 
 func BenchmarkBigCacheSetOnlySmallDataNoTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, bigCacheNoTTL)
 	benchmarkSetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) })
 }
 
 func BenchmarkBigCacheSetOnlyBigDataNoTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, bigCacheNoTTL)
 	benchmarkSetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) })
 }
@@ -762,18 +789,14 @@ func BenchmarkGoCacheGetBigDataNoTTL(b *testing.B) {
 }
 
 func BenchmarkBigCacheGetSmallDataNoTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, bigCacheNoTTL)
 	benchmarkGetOnly(b, smallData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })
 }
 
 func BenchmarkBigCacheGetBigDataNoTTL(b *testing.B) {
-	cfg := bigcache.DefaultConfig(bigCacheNoTTL)
-	cfg.Verbose = false
-	bc, _ := bigcache.New(b.Context(), cfg)
+	bc := newBigCache(b, bigCacheNoTTL)
 	benchmarkGetOnly(b, bigData, NoTTL,
 		func(k, v string, t time.Duration) { bc.Set(k, []byte(v)) },
 		func(k string) { bc.Get(k) })

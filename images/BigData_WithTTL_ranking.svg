@@ -1,0 +1,136 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1160" height="900" viewBox="0 0 1160 900" font-family="sans-serif">
+<rect width="1160" height="900" fill="#ffffff"/>
+<text x="580" y="32" text-anchor="middle" font-size="20" font-weight="bold" fill="#222">BigData WithTTL — ranking by latency</text>
+<text x="580" y="54" text-anchor="middle" font-size="12" fill="#555">log10 scale, shorter bar = better. Labels show the multiple relative to the best in each column.</text>
+<text x="135" y="80" font-size="13" font-weight="bold" fill="#222">Latency (ns/op)</text>
+<text x="645" y="80" font-size="13" font-weight="bold" fill="#222">Allocations (allocs/op)</text>
+<text x="10" y="104.0" font-size="14" font-weight="bold" fill="#222">P100</text>
+<line x1="10" y1="112.0" x2="1150" y2="112.0" stroke="#ddd"/>
+<rect x="4" y="118.0" width="1152" height="24.0" fill="#fff7d6"/>
+<text x="120" y="136.0" text-anchor="end" font-size="12" font-weight="bold" fill="#111">#1 GacheV2</text>
+<rect x="135" y="122.0" width="24.0" height="18.0" fill="#d62728"/>
+<rect x="645" y="122.0" width="2.0" height="18.0" fill="#d62728"/>
+<text x="165.0" y="136.0" font-size="11" font-weight="bold" fill="#111">878.5K ns  (best)</text>
+<text x="653.0" y="136.0" font-size="11" font-weight="bold" fill="#111">0.0  (best)</text>
+<text x="120" y="162.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#2 Gache</text>
+<rect x="135" y="148.0" width="119.2" height="18.0" fill="#2ca02c"/>
+<rect x="645" y="148.0" width="253.4" height="18.0" fill="#2ca02c"/>
+<text x="260.2" y="162.0" font-size="11" font-weight="normal" fill="#333">13.5M ns  (15x)</text>
+<text x="904.4" y="162.0" font-size="11" font-weight="normal" fill="#333">264.4K  (best is 0)</text>
+<text x="120" y="188.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#3 GCacheLRU</text>
+<rect x="135" y="174.0" width="204.8" height="18.0" fill="#e377c2"/>
+<rect x="645" y="174.0" width="267.9" height="18.0" fill="#e377c2"/>
+<text x="345.8" y="188.0" font-size="11" font-weight="normal" fill="#333">158.1M ns  (180x)</text>
+<text x="918.9" y="188.0" font-size="11" font-weight="normal" fill="#333">561.8K  (best is 0)</text>
+<text x="120" y="214.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#4 GCacheLFU</text>
+<rect x="135" y="200.0" width="205.5" height="18.0" fill="#8c564b"/>
+<rect x="645" y="200.0" width="267.2" height="18.0" fill="#8c564b"/>
+<text x="346.5" y="214.0" font-size="11" font-weight="normal" fill="#333">161.4M ns  (184x)</text>
+<text x="918.2" y="214.0" font-size="11" font-weight="normal" fill="#333">543.1K  (best is 0)</text>
+<text x="120" y="240.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#5 TTLCache</text>
+<rect x="135" y="226.0" width="215.6" height="18.0" fill="#17becf"/>
+<rect x="645" y="226.0" width="101.5" height="18.0" fill="#17becf"/>
+<text x="356.6" y="240.0" font-size="11" font-weight="normal" fill="#333">215.9M ns  (246x)</text>
+<text x="752.5" y="240.0" font-size="11" font-weight="normal" fill="#333">98  (best is 0)</text>
+<text x="120" y="266.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#6 GoCache</text>
+<rect x="135" y="252.0" width="215.9" height="18.0" fill="#7f7f7f"/>
+<rect x="645" y="252.0" width="239.9" height="18.0" fill="#7f7f7f"/>
+<text x="356.9" y="266.0" font-size="11" font-weight="normal" fill="#333">217.6M ns  (248x)</text>
+<text x="890.9" y="266.0" font-size="11" font-weight="normal" fill="#333">131.2K  (best is 0)</text>
+<text x="120" y="292.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#7 GCacheARC</text>
+<rect x="135" y="278.0" width="222.6" height="18.0" fill="#9467bd"/>
+<rect x="645" y="278.0" width="269.8" height="18.0" fill="#9467bd"/>
+<text x="363.6" y="292.0" font-size="11" font-weight="normal" fill="#333">263.8M ns  (300x)</text>
+<text x="920.8" y="292.0" font-size="11" font-weight="normal" fill="#333">622.7K  (best is 0)</text>
+<text x="120" y="318.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#8 BigCache</text>
+<rect x="135" y="304.0" width="269.9" height="18.0" fill="#1f77b4"/>
+<rect x="645" y="304.0" width="245.8" height="18.0" fill="#1f77b4"/>
+<text x="410.9" y="318.0" font-size="11" font-weight="normal" fill="#333">1026.8M ns  (1169x)</text>
+<text x="896.8" y="318.0" font-size="11" font-weight="normal" fill="#333">178.7K  (best is 0)</text>
+<text x="10" y="364.0" font-size="14" font-weight="bold" fill="#222">P1000</text>
+<line x1="10" y1="372.0" x2="1150" y2="372.0" stroke="#ddd"/>
+<rect x="4" y="378.0" width="1152" height="24.0" fill="#fff7d6"/>
+<text x="120" y="396.0" text-anchor="end" font-size="12" font-weight="bold" fill="#111">#1 GacheV2</text>
+<rect x="135" y="382.0" width="36.1" height="18.0" fill="#d62728"/>
+<rect x="645" y="382.0" width="13.3" height="18.0" fill="#d62728"/>
+<text x="177.1" y="396.0" font-size="11" font-weight="bold" fill="#111">1.2M ns  (best)</text>
+<text x="664.3" y="396.0" font-size="11" font-weight="bold" fill="#111">1.0  (best)</text>
+<text x="120" y="422.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#2 Gache</text>
+<rect x="135" y="408.0" width="110.0" height="18.0" fill="#2ca02c"/>
+<rect x="645" y="408.0" width="253.3" height="18.0" fill="#2ca02c"/>
+<text x="251.0" y="422.0" font-size="11" font-weight="normal" fill="#333">10.4M ns  (8.4x)</text>
+<text x="904.3" y="422.0" font-size="11" font-weight="normal" fill="#333">263.9K  (263854x)</text>
+<text x="120" y="448.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#3 GCacheLRU</text>
+<rect x="135" y="434.0" width="203.5" height="18.0" fill="#e377c2"/>
+<rect x="645" y="434.0" width="267.9" height="18.0" fill="#e377c2"/>
+<text x="344.5" y="448.0" font-size="11" font-weight="normal" fill="#333">152.4M ns  (123x)</text>
+<text x="918.9" y="448.0" font-size="11" font-weight="normal" fill="#333">562.0K  (562030x)</text>
+<text x="120" y="474.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#4 GCacheLFU</text>
+<rect x="135" y="460.0" width="207.9" height="18.0" fill="#8c564b"/>
+<rect x="645" y="460.0" width="267.3" height="18.0" fill="#8c564b"/>
+<text x="348.9" y="474.0" font-size="11" font-weight="normal" fill="#333">173.3M ns  (140x)</text>
+<text x="918.3" y="474.0" font-size="11" font-weight="normal" fill="#333">546.5K  (546467x)</text>
+<text x="120" y="500.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#5 GoCache</text>
+<rect x="135" y="486.0" width="209.6" height="18.0" fill="#7f7f7f"/>
+<rect x="645" y="486.0" width="239.9" height="18.0" fill="#7f7f7f"/>
+<text x="350.6" y="500.0" font-size="11" font-weight="normal" fill="#333">181.6M ns  (146x)</text>
+<text x="890.9" y="500.0" font-size="11" font-weight="normal" fill="#333">131.4K  (131412x)</text>
+<text x="120" y="526.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#6 TTLCache</text>
+<rect x="135" y="512.0" width="215.8" height="18.0" fill="#17becf"/>
+<rect x="645" y="512.0" width="128.7" height="18.0" fill="#17becf"/>
+<text x="356.8" y="526.0" font-size="11" font-weight="normal" fill="#333">217.0M ns  (175x)</text>
+<text x="779.7" y="526.0" font-size="11" font-weight="normal" fill="#333">404  (404x)</text>
+<text x="120" y="552.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#7 GCacheARC</text>
+<rect x="135" y="538.0" width="223.0" height="18.0" fill="#9467bd"/>
+<rect x="645" y="538.0" width="269.9" height="18.0" fill="#9467bd"/>
+<text x="364.0" y="552.0" font-size="11" font-weight="normal" fill="#333">267.4M ns  (215x)</text>
+<text x="920.9" y="552.0" font-size="11" font-weight="normal" fill="#333">623.1K  (623097x)</text>
+<text x="120" y="578.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#8 BigCache</text>
+<rect x="135" y="564.0" width="270.0" height="18.0" fill="#1f77b4"/>
+<rect x="645" y="564.0" width="253.1" height="18.0" fill="#1f77b4"/>
+<text x="411.0" y="578.0" font-size="11" font-weight="normal" fill="#333">1030.9M ns  (830x)</text>
+<text x="904.1" y="578.0" font-size="11" font-weight="normal" fill="#333">260.4K  (260417x)</text>
+<text x="10" y="624.0" font-size="14" font-weight="bold" fill="#222">P10000</text>
+<line x1="10" y1="632.0" x2="1150" y2="632.0" stroke="#ddd"/>
+<rect x="4" y="638.0" width="1152" height="24.0" fill="#fff7d6"/>
+<text x="120" y="656.0" text-anchor="end" font-size="12" font-weight="bold" fill="#111">#1 GacheV2</text>
+<rect x="135" y="642.0" width="39.4" height="18.0" fill="#d62728"/>
+<rect x="645" y="642.0" width="69.9" height="18.0" fill="#d62728"/>
+<text x="180.4" y="656.0" font-size="11" font-weight="bold" fill="#111">1.4M ns  (best)</text>
+<text x="720.9" y="656.0" font-size="11" font-weight="bold" fill="#111">19  (best)</text>
+<text x="120" y="682.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#2 Gache</text>
+<rect x="135" y="668.0" width="107.0" height="18.0" fill="#2ca02c"/>
+<rect x="645" y="668.0" width="253.3" height="18.0" fill="#2ca02c"/>
+<text x="248.0" y="682.0" font-size="11" font-weight="normal" fill="#333">9.5M ns  (7.0x)</text>
+<text x="904.3" y="682.0" font-size="11" font-weight="normal" fill="#333">263.4K  (13862x)</text>
+<text x="120" y="708.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#3 GCacheLRU</text>
+<rect x="135" y="694.0" width="203.9" height="18.0" fill="#e377c2"/>
+<rect x="645" y="694.0" width="268.0" height="18.0" fill="#e377c2"/>
+<text x="344.9" y="708.0" font-size="11" font-weight="normal" fill="#333">154.1M ns  (113x)</text>
+<text x="919.0" y="708.0" font-size="11" font-weight="normal" fill="#333">564.6K  (29717x)</text>
+<text x="120" y="734.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#4 GCacheLFU</text>
+<rect x="135" y="720.0" width="207.0" height="18.0" fill="#8c564b"/>
+<rect x="645" y="720.0" width="267.4" height="18.0" fill="#8c564b"/>
+<text x="348.0" y="734.0" font-size="11" font-weight="normal" fill="#333">168.4M ns  (123x)</text>
+<text x="918.4" y="734.0" font-size="11" font-weight="normal" fill="#333">549.5K  (28921x)</text>
+<text x="120" y="760.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#5 GoCache</text>
+<rect x="135" y="746.0" width="216.1" height="18.0" fill="#7f7f7f"/>
+<rect x="645" y="746.0" width="240.4" height="18.0" fill="#7f7f7f"/>
+<text x="357.1" y="760.0" font-size="11" font-weight="normal" fill="#333">218.8M ns  (160x)</text>
+<text x="891.4" y="760.0" font-size="11" font-weight="normal" fill="#333">134.4K  (7076x)</text>
+<text x="120" y="786.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#6 TTLCache</text>
+<rect x="135" y="772.0" width="216.8" height="18.0" fill="#17becf"/>
+<rect x="645" y="772.0" width="173.0" height="18.0" fill="#17becf"/>
+<text x="357.8" y="786.0" font-size="11" font-weight="normal" fill="#333">223.3M ns  (164x)</text>
+<text x="824.0" y="786.0" font-size="11" font-weight="normal" fill="#333">4.0K  (213x)</text>
+<text x="120" y="812.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#7 GCacheARC</text>
+<rect x="135" y="798.0" width="223.8" height="18.0" fill="#9467bd"/>
+<rect x="645" y="798.0" width="270.0" height="18.0" fill="#9467bd"/>
+<text x="364.8" y="812.0" font-size="11" font-weight="normal" fill="#333">273.1M ns  (200x)</text>
+<text x="921.0" y="812.0" font-size="11" font-weight="normal" fill="#333">627.6K  (33034x)</text>
+<text x="120" y="838.0" text-anchor="end" font-size="12" font-weight="normal" fill="#333">#8 BigCache</text>
+<rect x="135" y="824.0" width="269.5" height="18.0" fill="#1f77b4"/>
+<rect x="645" y="824.0" width="254.6" height="18.0" fill="#1f77b4"/>
+<text x="410.5" y="838.0" font-size="11" font-weight="normal" fill="#333">1017.0M ns  (745x)</text>
+<text x="905.6" y="838.0" font-size="11" font-weight="normal" fill="#333">282.4K  (14861x)</text>
+</svg>
